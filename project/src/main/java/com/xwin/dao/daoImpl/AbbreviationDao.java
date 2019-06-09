@@ -7,9 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface AbbreviationDao extends JpaRepository<Abbreviation, String> {
 
     @Query(value = "select abb from Abbreviation abb where abb.id=?1")
     public Abbreviation getAbbreviationDetail(String id);
+
+    int countByUserId(String userId);
+
+    List<Abbreviation> findByUserId(String userId);
 }

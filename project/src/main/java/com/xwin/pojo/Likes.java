@@ -19,8 +19,8 @@ public class Likes  implements Serializable {
 
 	private Long count;
 
-	@Column(name = "likeId")
-	private String likeid;
+	@Column(name = "like_id")
+	private String likeId;
 
 	@Column(name = "createTime")
 	private java.util.Date createtime;
@@ -42,11 +42,11 @@ public class Likes  implements Serializable {
 	}
 
 	public String getLikeid() {
-		return likeid;
+		return likeId;
 	}
 
 	public void setLikeid(String likeid) {
-		this.likeid = likeid;
+		this.likeId = likeid;
 	}
 
 	public Date getCreatetime() {
@@ -62,7 +62,7 @@ public class Likes  implements Serializable {
 		return "Likes{" +
 				"id='" + id + '\'' +
 				", count=" + count +
-				", likeid='" + likeid + '\'' +
+				", likeid='" + likeId + '\'' +
 				", createtime=" + createtime +
 				'}';
 	}

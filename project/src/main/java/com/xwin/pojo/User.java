@@ -29,14 +29,14 @@ public class User  implements Serializable {
 	@Column(name = "avatar_url")
 	private String avatarUrl;
 
-	private Long gender;
+	private String gender;
 
 	private String region;
 
 	private String profile;
 
 	@Column(name = "verification_code")
-	private Long verificationCode;
+	private String verificationCode;
 
 	@Column(name = "create_time")
 	private java.util.Date createTime;
@@ -57,6 +57,29 @@ public class User  implements Serializable {
 
 	@Transient
 	private Image image;
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id='" + id + '\'' +
+				", username='" + username + '\'' +
+				", nickname='" + nickname + '\'' +
+				", roleId=" + roleId +
+				", point=" + point +
+				", avatarUrl='" + avatarUrl + '\'' +
+				", gender='" + gender + '\'' +
+				", region='" + region + '\'' +
+				", profile='" + profile + '\'' +
+				", verificationCode='" + verificationCode + '\'' +
+				", createTime=" + createTime +
+				", dataStatus=" + dataStatus +
+				", lastUpdateTime=" + lastUpdateTime +
+				", token='" + token + '\'' +
+				", lastLoginTime=" + lastLoginTime +
+				", lastLoginIp='" + lastLoginIp + '\'' +
+				", image=" + image +
+				'}';
+	}
 
 	public String getId() {
 		return id;
@@ -106,11 +129,11 @@ public class User  implements Serializable {
 		this.avatarUrl = avatarUrl;
 	}
 
-	public Long getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(Long gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
@@ -130,11 +153,11 @@ public class User  implements Serializable {
 		this.profile = profile;
 	}
 
-	public Long getVerificationCode() {
+	public String getVerificationCode() {
 		return verificationCode;
 	}
 
-	public void setVerificationCode(Long verificationCode) {
+	public void setVerificationCode(String verificationCode) {
 		this.verificationCode = verificationCode;
 	}
 
@@ -194,26 +217,8 @@ public class User  implements Serializable {
 		this.image = image;
 	}
 
-	@Override
-	public String toString() {
-		return "User{" +
-				"id='" + id + '\'' +
-				", username='" + username + '\'' +
-				", nickname='" + nickname + '\'' +
-				", roleId=" + roleId +
-				", point=" + point +
-				", avatarUrl='" + avatarUrl + '\'' +
-				", gender=" + gender +
-				", region='" + region + '\'' +
-				", profile='" + profile + '\'' +
-				", verificationCode=" + verificationCode +
-				", createTime=" + createTime +
-				", dataStatus=" + dataStatus +
-				", lastUpdateTime=" + lastUpdateTime +
-				", token='" + token + '\'' +
-				", lastLoginTime=" + lastLoginTime +
-				", lastLoginIp='" + lastLoginIp + '\'' +
-				", image=" + image +
-				'}';
+	public User() {
 	}
+
+
 }
