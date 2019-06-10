@@ -6,5 +6,5 @@ public interface AbbreviationService {
 
     public void getHotNews();
 
-    public Abbreviation getAbbreviationDetail(String entryId);
+    public Abbreviation getAbbreviationDetail(Long entryId);
 }

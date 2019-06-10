@@ -18,7 +18,7 @@ public class AbbreviationServiceImpl implements AbbreviationService {
     }
 
     @Override
-    public Abbreviation getAbbreviationDetail(String entryId) {
+    public Abbreviation getAbbreviationDetail(Long entryId) {
         return abbreviationDao.getAbbreviationDetail(entryId);
     }
 }

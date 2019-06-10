@@ -13,14 +13,12 @@ import java.util.Date;
 public class BannerNews  implements Serializable {
 
 	@Id
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	private String id;
+	private Long id;
 
 	private String title;
 
 	@Column(name = "image_id")
-	private String imageId;
+	private Long imageId;
 
 	@Column(name = "html_url")
 	private String htmlUrl;
@@ -47,11 +45,11 @@ public class BannerNews  implements Serializable {
 		this.image = image;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -63,11 +61,11 @@ public class BannerNews  implements Serializable {
 		this.title = title;
 	}
 
-	public String getImageId() {
+	public Long getImageId() {
 		return imageId;
 	}
 
-	public void setImageId(String imageId) {
+	public void setImageId(Long imageId) {
 		this.imageId = imageId;
 	}
 

@@ -13,12 +13,10 @@ import java.util.Date;
 public class Abbreviation  implements Serializable {
 
 	@Id
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	private String id;
+	private Long id;
 
 	@Column(name = "user_id")
-	private String userId;
+	private Long userId;
 
 	@Column(name = "abbr_name")
 	private String abbrName;
@@ -29,7 +27,7 @@ public class Abbreviation  implements Serializable {
 	private String content;
 
 	@Column(name = "image_id")
-	private String imageId;
+	private Long imageId;
 
 	@Column(name = "data_status")
 	private Long dataStatus;
@@ -48,19 +46,19 @@ public class Abbreviation  implements Serializable {
 	@Transient
 	private Image image;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -88,11 +86,11 @@ public class Abbreviation  implements Serializable {
 		this.content = content;
 	}
 
-	public String getImageId() {
+	public Long getImageId() {
 		return imageId;
 	}
 
-	public void setImageId(String imageId) {
+	public void setImageId(Long imageId) {
 		this.imageId = imageId;
 	}
 

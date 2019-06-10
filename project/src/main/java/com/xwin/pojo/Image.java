@@ -13,15 +13,13 @@ import java.util.Date;
 public class Image  implements Serializable {
 
 	@Id
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	private String id;
+	private Long id;
 
 	@Column(name = "post_id")
-	private String postId;
+	private Long postId;
 
 	@Column(name = "abbreviation_id")
-	private String abbreviationId;
+	private Long abbreviationId;
 
 	private String path;
 
@@ -40,87 +38,87 @@ public class Image  implements Serializable {
 
 	private Long type;
 
-	public String getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getPostId() {
-		return postId;
-	}
+    public Long getPostId() {
+        return postId;
+    }
 
-	public void setPostId(String postId) {
-		this.postId = postId;
-	}
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
 
-	public String getAbbreviationId() {
-		return abbreviationId;
-	}
+    public Long getAbbreviationId() {
+        return abbreviationId;
+    }
 
-	public void setAbbreviationId(String abbreviationId) {
-		this.abbreviationId = abbreviationId;
-	}
+    public void setAbbreviationId(Long abbreviationId) {
+        this.abbreviationId = abbreviationId;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getSequence() {
-		return sequence;
-	}
+    public String getSequence() {
+        return sequence;
+    }
 
-	public void setSequence(String sequence) {
-		this.sequence = sequence;
-	}
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
+    }
 
-	public Long getDataStatus() {
-		return dataStatus;
-	}
+    public Long getDataStatus() {
+        return dataStatus;
+    }
 
-	public void setDataStatus(Long dataStatus) {
-		this.dataStatus = dataStatus;
-	}
+    public void setDataStatus(Long dataStatus) {
+        this.dataStatus = dataStatus;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	public Date getLastUpdateTime() {
-		return lastUpdateTime;
-	}
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
 
-	public void setLastUpdateTime(Date lastUpdateTime) {
-		this.lastUpdateTime = lastUpdateTime;
-	}
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
 
-	public Long getType() {
-		return type;
-	}
+    public Long getType() {
+        return type;
+    }
 
-	public void setType(Long type) {
-		this.type = type;
-	}
+    public void setType(Long type) {
+        this.type = type;
+    }
 
-	@Override
+    @Override
 	public String toString() {
 		return "Image{" +
 				"id='" + id + '\'' +

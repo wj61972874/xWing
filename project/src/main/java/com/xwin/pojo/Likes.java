@@ -13,23 +13,21 @@ import java.util.Date;
 public class Likes  implements Serializable {
 
 	@Id
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	private String id;
+	private Long id;
 
 	private Long count;
 
 	@Column(name = "like_id")
-	private String likeId;
+	private Long likeId;
 
 	@Column(name = "createTime")
 	private java.util.Date createtime;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -41,11 +39,11 @@ public class Likes  implements Serializable {
 		this.count = count;
 	}
 
-	public String getLikeid() {
+	public Long getLikeid() {
 		return likeId;
 	}
 
-	public void setLikeid(String likeid) {
+	public void setLikeid(Long likeid) {
 		this.likeId = likeid;
 	}
 

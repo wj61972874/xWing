@@ -10,12 +10,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AbbreviationDao extends JpaRepository<Abbreviation, String> {
+public interface AbbreviationDao extends JpaRepository<Abbreviation, Long> {
 
     @Query(value = "select abb from Abbreviation abb where abb.id=?1")
-    public Abbreviation getAbbreviationDetail(String id);
+    public Abbreviation getAbbreviationDetail(Long id);
 
-    int countByUserId(String userId);
+    int countByUserId(Long userId);
 
-    List<Abbreviation> findByUserId(String userId);
+    List<Abbreviation> findByUserId(Long userId);
 }

@@ -13,15 +13,13 @@ import java.util.Date;
 public class Comment  implements Serializable {
 
 	@Id
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	private String id;
+	private Long id;
 
 	@Column(name = "user_id")
-	private String userId;
+	private Long userId;
 
 	@Column(name = "post_id")
-	private String postId;
+	private Long postId;
 
 	@Column(name = "abbreviation_id")
 	private String abbreviationId;
@@ -37,27 +35,27 @@ public class Comment  implements Serializable {
 	@Column(name = "last_update_time")
 	private java.util.Date lastUpdateTime;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
-	public String getPostId() {
+	public Long getPostId() {
 		return postId;
 	}
 
-	public void setPostId(String postId) {
+	public void setPostId(Long postId) {
 		this.postId = postId;
 	}
 

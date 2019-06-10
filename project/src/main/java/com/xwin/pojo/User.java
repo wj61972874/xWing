@@ -13,9 +13,7 @@ import java.util.Date;
 public class User  implements Serializable {
 
 	@Id
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	private String id;
+	private Long id;
 
 	private String username;
 
@@ -58,167 +56,162 @@ public class User  implements Serializable {
 	@Transient
 	private Image image;
 
-	@Override
-	public String toString() {
-		return "User{" +
-				"id='" + id + '\'' +
-				", username='" + username + '\'' +
-				", nickname='" + nickname + '\'' +
-				", roleId=" + roleId +
-				", point=" + point +
-				", avatarUrl='" + avatarUrl + '\'' +
-				", gender='" + gender + '\'' +
-				", region='" + region + '\'' +
-				", profile='" + profile + '\'' +
-				", verificationCode='" + verificationCode + '\'' +
-				", createTime=" + createTime +
-				", dataStatus=" + dataStatus +
-				", lastUpdateTime=" + lastUpdateTime +
-				", token='" + token + '\'' +
-				", lastLoginTime=" + lastLoginTime +
-				", lastLoginIp='" + lastLoginIp + '\'' +
-				", image=" + image +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", roleId=" + roleId +
+                ", point=" + point +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", gender='" + gender + '\'' +
+                ", region='" + region + '\'' +
+                ", profile='" + profile + '\'' +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", createTime=" + createTime +
+                ", dataStatus=" + dataStatus +
+                ", lastUpdateTime=" + lastUpdateTime +
+                ", token='" + token + '\'' +
+                ", lastLoginTime=" + lastLoginTime +
+                ", lastLoginIp='" + lastLoginIp + '\'' +
+                ", image=" + image +
+                '}';
+    }
 
-	public String getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public String getNickname() {
-		return nickname;
-	}
+    public String getNickname() {
+        return nickname;
+    }
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
-	public Long getRoleId() {
-		return roleId;
-	}
+    public Long getRoleId() {
+        return roleId;
+    }
 
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 
-	public Long getPoint() {
-		return point;
-	}
+    public Long getPoint() {
+        return point;
+    }
 
-	public void setPoint(Long point) {
-		this.point = point;
-	}
+    public void setPoint(Long point) {
+        this.point = point;
+    }
 
-	public String getAvatarUrl() {
-		return avatarUrl;
-	}
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
 
-	public void setAvatarUrl(String avatarUrl) {
-		this.avatarUrl = avatarUrl;
-	}
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-	public String getRegion() {
-		return region;
-	}
+    public String getRegion() {
+        return region;
+    }
 
-	public void setRegion(String region) {
-		this.region = region;
-	}
+    public void setRegion(String region) {
+        this.region = region;
+    }
 
-	public String getProfile() {
-		return profile;
-	}
+    public String getProfile() {
+        return profile;
+    }
 
-	public void setProfile(String profile) {
-		this.profile = profile;
-	}
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 
-	public String getVerificationCode() {
-		return verificationCode;
-	}
+    public String getVerificationCode() {
+        return verificationCode;
+    }
 
-	public void setVerificationCode(String verificationCode) {
-		this.verificationCode = verificationCode;
-	}
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	public Long getDataStatus() {
-		return dataStatus;
-	}
+    public Long getDataStatus() {
+        return dataStatus;
+    }
 
-	public void setDataStatus(Long dataStatus) {
-		this.dataStatus = dataStatus;
-	}
+    public void setDataStatus(Long dataStatus) {
+        this.dataStatus = dataStatus;
+    }
 
-	public Date getLastUpdateTime() {
-		return lastUpdateTime;
-	}
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
 
-	public void setLastUpdateTime(Date lastUpdateTime) {
-		this.lastUpdateTime = lastUpdateTime;
-	}
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public String getToken() {
+        return token;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-	public Date getLastLoginTime() {
-		return lastLoginTime;
-	}
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
 
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
-	}
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 
-	public String getLastLoginIp() {
-		return lastLoginIp;
-	}
+    public String getLastLoginIp() {
+        return lastLoginIp;
+    }
 
-	public void setLastLoginIp(String lastLoginIp) {
-		this.lastLoginIp = lastLoginIp;
-	}
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp;
+    }
 
-	public Image getImage() {
-		return image;
-	}
+    public Image getImage() {
+        return image;
+    }
 
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
-	public User() {
-	}
-
-
+    public void setImage(Image image) {
+        this.image = image;
+    }
 }

@@ -27,7 +27,7 @@ public class AbbreviationController {
     }
 
     @RequestMapping(value = "/getOneEntryDetail",method = RequestMethod.POST)
-    public ReturnResult getAbbreviationDetail(String entryId){
+    public ReturnResult getAbbreviationDetail(Long entryId){
         Abbreviation entry=abbreviationService.getAbbreviationDetail(entryId);
         Image image=pictureService.getImageById(entryId);
         entry.setImage(image);

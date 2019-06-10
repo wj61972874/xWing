@@ -16,5 +16,5 @@ public interface PictureDao extends JpaRepository<Image, Long> {
     public List<Image> findAllByType(long type, Date weekBeginTime, Date weekEndTime);
 
     @Query(value = "SELECT * FROM image WHERE id=?1",nativeQuery = true)
-    public Image getImageById(String entryId);
+    public Image getImageById(Long entryId);
 }

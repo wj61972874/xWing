@@ -1,10 +1,7 @@
 package com.xwin.service.serviceImpl;
 
 import com.xwin.common.GetPhoneMessage;
-import com.xwin.common.utils.ModelUtils;
-import com.xwin.common.utils.ObjectUtil;
-import com.xwin.common.utils.RetCode;
-import com.xwin.common.utils.ReturnResult;
+import com.xwin.common.utils.*;
 import com.xwin.dao.daoImpl.AbbreviationDao;
 import com.xwin.dao.daoImpl.FollowDao;
 import com.xwin.dao.daoImpl.LikesDao;
@@ -18,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.annotation.Resource;
 import java.math.BigInteger;
 import java.util.*;
 
@@ -45,6 +43,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             user = new User();
             Date now = new Date();
+            user.setId(IDUtils.genItemId());
             user.setNickname(now.getTime() + "");
             user.setCreateTime(now);
             user.setDataStatus(1L);
@@ -115,7 +114,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReturnResult modifyUserInfo(String userId, String nickname, String gender, String region, String profile, String avatar) {
+    public ReturnResult modifyUserInfo(Long userId, String nickname, String gender, String region, String profile, String avatar) {
 
         // 获取用户
         Optional<User> userById = userDao.findById(userId);
@@ -152,7 +151,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReturnResult getUserFollow(String userId) {
+    public ReturnResult getUserFollow(Long userId) {
 
         // 获取用户
         Optional<User> userById = userDao.findById(userId);

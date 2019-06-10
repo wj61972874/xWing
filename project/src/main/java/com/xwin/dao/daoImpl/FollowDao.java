@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FollowDao extends JpaRepository<Follow, String> {
+public interface FollowDao extends JpaRepository<Follow, Long> {
 
     @Query(value = "select f from Follow f where f.userId = :userId order by f.createTime desc ")
-    List<Follow> getUserFollow(@Param("userId") String userId);
+    List<Follow> getUserFollow(@Param("userId") Long userId);
+
+    Follow findByUserIdAndFollowedUserId(Long userId, Long followedUserId);
 }

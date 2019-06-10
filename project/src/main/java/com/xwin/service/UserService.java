@@ -36,7 +36,7 @@ public interface UserService {
      * @param avatar   头像
      * @return 业务结果对象
      */
-    ReturnResult modifyUserInfo(String userId, String nickname, String gender, String region, String profile, String avatar);
+    ReturnResult modifyUserInfo(Long userId, String nickname, String gender, String region, String profile, String avatar);
 
     /**
      * 获取用户关注信息
@@ -44,6 +44,6 @@ public interface UserService {
      * @param userId 用户id
      * @return 业务结果对象
      */
-    ReturnResult getUserFollow(String userId);
+    ReturnResult getUserFollow(Long userId);
 
 }

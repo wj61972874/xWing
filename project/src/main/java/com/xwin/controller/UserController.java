@@ -56,7 +56,7 @@ public class UserController {
 
     @RequestMapping(value = "/modify/{userId}", method = RequestMethod.POST)
     public ReturnResult modifyUserInfo(
-            @PathVariable(value = "userId") String userId,
+            @PathVariable(value = "userId") Long userId,
             @RequestParam(value = "nickname", required = false) String nickname,
             @RequestParam(value = "gender", required = false) String gender,
             @RequestParam(value = "region", required = false) String region,
@@ -67,7 +67,7 @@ public class UserController {
 
     @RequestMapping(value = "/follow", method = RequestMethod.GET)
     public ReturnResult getUserFollow(
-            @RequestParam(value = "userId") String userId) {
+            @RequestParam(value = "userId") Long userId) {
         return userService.getUserFollow(userId);
     }
 }

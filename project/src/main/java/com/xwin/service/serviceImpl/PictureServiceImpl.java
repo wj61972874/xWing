@@ -76,7 +76,7 @@ public class PictureServiceImpl implements PictureService {
 	}
 
 	@Override
-	public Image getImageById(String entryId) {
+	public Image getImageById(Long entryId) {
 
 		return pictureDao.getImageById(entryId);
 	}

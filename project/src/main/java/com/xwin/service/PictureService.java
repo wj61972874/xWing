@@ -12,5 +12,5 @@ public interface PictureService {
 
 	public List<Image> getAllImagesByType(long type);
 
-    public Image getImageById(String entryId);
+    public Image getImageById(Long entryId);
 }
