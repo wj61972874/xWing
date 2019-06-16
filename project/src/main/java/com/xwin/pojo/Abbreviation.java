@@ -81,6 +81,14 @@ public class Abbreviation  implements Serializable {
 		this.image = image;
 	}
 
+	public List<Image> getImageList() {
+		return imageList;
+	}
+
+	public  void setImageList(List<Image> imageList) {
+		this.imageList = imageList;
+	}
+
 	@Transient
 	private Image image;
 
