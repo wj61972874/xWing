@@ -1,6 +1,5 @@
 package com.xwin.controller;
 
-import com.xwin.common.utils.RetCode;
 import com.xwin.common.utils.ReturnResult;
 import com.xwin.pojo.Login;
 import com.xwin.pojo.User;
@@ -9,16 +8,9 @@ import com.xwin.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.xwin.common.GetPhoneMessage;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/user")
