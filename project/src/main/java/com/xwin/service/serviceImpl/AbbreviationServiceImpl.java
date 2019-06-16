@@ -39,6 +39,13 @@ public class AbbreviationServiceImpl implements AbbreviationService {
     }
 
     @Override
+    public ReturnResult getRecommendedEntryList() {
+        List list = new ArrayList();
+        list = abbreviationDao.getAllAbbreviation();
+        return ReturnResult.build(200,"success",list);
+    }
+
+    @Override
     public Abbreviation getAbbreviationDetail(Long entryId) {
         return abbreviationDao.getAbbreviationDetail(entryId);
     }

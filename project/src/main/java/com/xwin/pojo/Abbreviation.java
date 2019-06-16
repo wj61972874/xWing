@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -37,13 +38,20 @@ public class Abbreviation  implements Serializable {
 	@Column(name = "create_by")
 	private Long createBy;
 
+	@OneToMany(mappedBy = "abbreviationId")
+	private List<Image> imageList;
+
 	@Column(name = "last_update_time")
 	private java.util.Date lastUpdateTime;
 
 	private Long type;
 
+
 	@Column(name = "liked_count")
 	private Long likedCount;
+
+	@Column(name = "visited_count")
+	private Long visitedCount;
 
 	@Override
 	public String toString() {
@@ -60,6 +68,7 @@ public class Abbreviation  implements Serializable {
 				", lastUpdateTime=" + lastUpdateTime +
 				", type=" + type +
 				", likedCount=" + likedCount +
+				", visitedCount=" + visitedCount +
 				", image=" + image +
 				'}';
 	}
@@ -169,5 +178,13 @@ public class Abbreviation  implements Serializable {
 
 	public void setLikedCount(Long likedCount) {
 		this.likedCount = likedCount;
+	}
+
+	public Long getVisitedCount() {
+		return visitedCount;
+	}
+
+	public void setVisitedCount(Long visitedCount) {
+		this.visitedCount = visitedCount;
 	}
 }
