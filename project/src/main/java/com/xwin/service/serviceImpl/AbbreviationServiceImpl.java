@@ -151,7 +151,7 @@ public class AbbreviationServiceImpl implements AbbreviationService {
         abbreviation.setLastUpdateTime(date);
         abbreviation.setType(1l);
         abbreviation.setDataStatus(1l);
-        abbreviation.setCreateBy(userId);
+        abbreviation.setCreateBy(Long.parseLong(userId));
         abbreviationDao.save(abbreviation);
         return 0;
     }
