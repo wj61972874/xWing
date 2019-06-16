@@ -50,12 +50,9 @@ public class PublishServiceImpl implements PublishService {
             abbrMap.put("abb_fullName", abbreviation.getFullName());
 
             // 获取词条图片url
-            List<Image> imagesList = pictureDao.findByAbbreviationId(abbreviation.getId());
-
-            if (!imagesList.isEmpty()) {
-                Image image = imagesList.get(0);
-                abbrMap.put("item_image", image.getPath());
-            }
+            List<Image> imagesList = abbreviation.getImageList();
+            Object o =
+                    imagesList.isEmpty() ? abbrMap.put("item_image", "") : abbrMap.put("item_image", imagesList.get(0).getPath());
 
             abbrList.add(abbrMap);
         }

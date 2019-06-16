@@ -61,12 +61,8 @@ public class CollectServiceImpl implements CollectService {
             map.put("collect_time", collection.getCreateTime());
 
             // 获取词条图片url
-            List<Image> imagesList = pictureDao.findByAbbreviationId(abbreviation.getId());
-
-            if (!imagesList.isEmpty()) {
-                Image image = imagesList.get(0);
-                map.put("item_image", image.getPath());
-            }
+            List<Image> imagesList = abbreviation.getImageList();
+            Object o = imagesList.isEmpty() ? map.put("item_image", "") : map.put("item_image", imagesList.get(0).getPath());
 
             result.add(map);
         }
