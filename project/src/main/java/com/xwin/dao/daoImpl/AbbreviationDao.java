@@ -18,4 +18,6 @@ public interface AbbreviationDao extends JpaRepository<Abbreviation, Long> {
     int countByUserId(Long userId);
 
     List<Abbreviation> findByUserId(Long userId);
+
+
 }
