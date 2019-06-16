@@ -25,26 +25,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private AbbreviationDao abbreviationDao;
-
-    @Autowired
-    private LikesDao likesDao;
-
-    @Autowired
-    private FollowDao followDao;
-
     @Override
     public ReturnResult getPhoneMessage(String phone) {
 
 //        String sendResult = GetPhoneMessage.getPram(phoneNumber);
-        String randNum = GetPhoneMessage.randNum;
+//        String randNum = GetPhoneMessage.randNum;
+        String randNum = "111111";
         User user = userDao.findByUsername(phone);
         if (user == null) {
             user = new User();
             Date now = new Date();
             user.setId(IDUtils.genItemId());
-            user.setNickname(now.getTime() + "");
+            user.setNickname(phone+"_"+now.getYear());
             user.setCreateTime(now);
             user.setDataStatus(1L);
             user.setLastUpdateTime(now);
@@ -150,53 +142,5 @@ public class UserServiceImpl implements UserService {
         return ReturnResult.build(RetCode.SUCCESS, "success",user);
     }
 
-    @Override
-    public ReturnResult getUserFollow(Long userId) {
 
-        // 获取用户
-        Optional<User> userById = userDao.findById(userId);
-        if (userById.equals(Optional.empty())) {
-            return ReturnResult.build(RetCode.FAIL, "用户不存在");
-        }
-
-        // 获取用户的关注集合
-        List<Follow> follows = followDao.getUserFollow(userId);
-
-        // 返回结果map
-        List<Map<String, Object>> result = new ArrayList<>();
-
-        // 遍历
-        for (Follow follow : follows) {
-
-            // 被关注用户
-            User followedUser = userDao.findById(follow.getFollowedUserId()).get();
-
-            // 转map
-//            Map<String, Object> map = ModelUtils.toMap(followedUser, true);
-            Map<String, Object> map = new HashMap<>();
-
-            map.put("id", followedUser.getId());
-            map.put("nickanme", followedUser.getNickname());
-            map.put("username", followedUser.getUsername());
-            map.put("avatar", followedUser.getAvatarUrl());
-
-            // 获取被关注用户发布post数量
-            int count = abbreviationDao.countByUserId(follow.getFollowedUserId());
-            map.put("sentCounts", count);
-
-            // 获取被关注人发布的post
-            List<Abbreviation> abbs = abbreviationDao.findByUserId(follow.getFollowedUserId());
-
-            // 点赞数
-            int praisedCount = 0;
-            for (Abbreviation abb : abbs) {
-                praisedCount =  praisedCount + likesDao.countByLikeId(abb.getId());
-            }
-            map.put("praisedCount", praisedCount);
-
-            result.add(map);
-        }
-
-        return ReturnResult.build(RetCode.SUCCESS, "success", result);
-    }
 }

@@ -17,6 +17,9 @@ public interface AbbreviationDao extends JpaRepository<Abbreviation, Long> {
 
     int countByUserId(Long userId);
 
+    @Query(value = "select abbr from Abbreviation abbr where abbr.userId = :userId and abbr.dataStatus = 1 order by abbr.createTime desc")
+    List<Abbreviation> getAbbreviationByUserId(Long userId);
+
     List<Abbreviation> findByUserId(Long userId);
 
 

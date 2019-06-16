@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface LikesDao extends JpaRepository<Likes, String> {
 
     int countByLikeId(Long postId);
+
+    Likes findByUserIdAndLikeId(Long userId, Long abbrId);
 }

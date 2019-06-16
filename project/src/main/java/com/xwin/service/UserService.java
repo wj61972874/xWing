@@ -38,12 +38,6 @@ public interface UserService {
      */
     ReturnResult modifyUserInfo(Long userId, String nickname, String gender, String region, String profile, String avatar);
 
-    /**
-     * 获取用户关注信息
-     *
-     * @param userId 用户id
-     * @return 业务结果对象
-     */
-    ReturnResult getUserFollow(Long userId);
+
 
 }

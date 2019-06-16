@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface FollowDao extends JpaRepository<Follow, Long> {
 
-    @Query(value = "select f from Follow f where f.userId = :userId order by f.createTime desc ")
+    @Query(value = "select f from Follow f where f.userId = :userId and f.dataStatus = 1 order by f.createTime desc ")
     List<Follow> getUserFollow(@Param("userId") Long userId);
 
     Follow findByUserIdAndFollowedUserId(Long userId, Long followedUserId);

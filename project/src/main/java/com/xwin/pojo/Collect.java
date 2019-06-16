@@ -8,8 +8,8 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "likes")
-public class Likes  implements Serializable {
+@Table(name = "collect")
+public class Collect  implements Serializable {
 
 	@Id
 	private Long id;
@@ -17,8 +17,11 @@ public class Likes  implements Serializable {
 	@Column(name = "user_id")
 	private Long userId;
 
-	@Column(name = "like_id")
-	private Long likeId;
+	@Column(name = "entry_id")
+	private Long entryId;
+
+	@Column(name = "data_status")
+	private Long dataStatus;
 
 	@Column(name = "create_time")
 	private java.util.Date createTime;
@@ -26,18 +29,15 @@ public class Likes  implements Serializable {
 	@Column(name = "last_update_time")
 	private java.util.Date lastUpdateTime;
 
-	@Column(name = "data_status")
-	private Long dataStatus;
-
 	@Override
 	public String toString() {
-		return "Likes{" +
+		return "Collect{" +
 				"id=" + id +
 				", userId=" + userId +
-				", likeId=" + likeId +
+				", entryId=" + entryId +
+				", dataStatus=" + dataStatus +
 				", createTime=" + createTime +
 				", lastUpdateTime=" + lastUpdateTime +
-				", dataStatus=" + dataStatus +
 				'}';
 	}
 
@@ -57,12 +57,20 @@ public class Likes  implements Serializable {
 		this.userId = userId;
 	}
 
-	public Long getLikeId() {
-		return likeId;
+	public Long getEntryId() {
+		return entryId;
 	}
 
-	public void setLikeId(Long likeId) {
-		this.likeId = likeId;
+	public void setEntryId(Long entryId) {
+		this.entryId = entryId;
+	}
+
+	public Long getDataStatus() {
+		return dataStatus;
+	}
+
+	public void setDataStatus(Long dataStatus) {
+		this.dataStatus = dataStatus;
 	}
 
 	public Date getCreateTime() {
@@ -79,13 +87,5 @@ public class Likes  implements Serializable {
 
 	public void setLastUpdateTime(Date lastUpdateTime) {
 		this.lastUpdateTime = lastUpdateTime;
-	}
-
-	public Long getDataStatus() {
-		return dataStatus;
-	}
-
-	public void setDataStatus(Long dataStatus) {
-		this.dataStatus = dataStatus;
 	}
 }

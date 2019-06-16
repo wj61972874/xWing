@@ -57,9 +57,4 @@ public class UserController {
         return userService.modifyUserInfo(userId, nickname, gender, region, profile, avatar);
     }
 
-    @RequestMapping(value = "/follow", method = RequestMethod.GET)
-    public ReturnResult getUserFollow(
-            @RequestParam(value = "userId") Long userId) {
-        return userService.getUserFollow(userId);
-    }
 }
