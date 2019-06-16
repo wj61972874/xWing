@@ -62,13 +62,11 @@ public class CollectServiceImpl implements CollectService {
 
             // 获取词条图片url
             List<Image> imagesList = pictureDao.findByAbbreviationId(abbreviation.getId());
-            List<Map<String, Object>> images = new ArrayList<>(imagesList.size());
-            for (Image image : imagesList) {
-                Map<String, Object> imageMap = new HashMap<>();
-                imageMap.put("imageUrl", image.getPath());
-                images.add(imageMap);
+
+            if (!imagesList.isEmpty()) {
+                Image image = imagesList.get(0);
+                map.put("item_image", image.getPath());
             }
-            map.put("item_image", images);
 
             result.add(map);
         }

@@ -51,13 +51,12 @@ public class PublishServiceImpl implements PublishService {
 
             // 获取词条图片url
             List<Image> imagesList = pictureDao.findByAbbreviationId(abbreviation.getId());
-            List<Map<String, Object>> images = new ArrayList<>(imagesList.size());
-            for (Image image : imagesList) {
-                Map<String, Object> imageMap = new HashMap<>();
-                imageMap.put("imageUrl", image.getPath());
-                images.add(imageMap);
+
+            if (!imagesList.isEmpty()) {
+                Image image = imagesList.get(0);
+                abbrMap.put("item_image", image.getPath());
             }
-            abbrMap.put("item_image", images);
+
             abbrList.add(abbrMap);
         }
 
