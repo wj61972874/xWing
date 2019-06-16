@@ -1,7 +1,6 @@
 package com.xwin.pojo;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,13 +14,32 @@ public class Likes  implements Serializable {
 	@Id
 	private Long id;
 
-	private Long count;
+	@Column(name = "user_id")
+	private Long userId;
 
 	@Column(name = "like_id")
 	private Long likeId;
 
-	@Column(name = "createTime")
-	private java.util.Date createtime;
+	@Column(name = "create_time")
+	private java.util.Date createTime;
+
+	@Column(name = "last_update_time")
+	private java.util.Date lastUpdateTime;
+
+	@Column(name = "data_status")
+	private Long dataStatus;
+
+	@Override
+	public String toString() {
+		return "Likes{" +
+				"id=" + id +
+				", userId=" + userId +
+				", likeId=" + likeId +
+				", createTime=" + createTime +
+				", lastUpdateTime=" + lastUpdateTime +
+				", dataStatus=" + dataStatus +
+				'}';
+	}
 
 	public Long getId() {
 		return id;
@@ -31,37 +49,43 @@ public class Likes  implements Serializable {
 		this.id = id;
 	}
 
-	public Long getCount() {
-		return count;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setCount(Long count) {
-		this.count = count;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	public Long getLikeid() {
+	public Long getLikeId() {
 		return likeId;
 	}
 
-	public void setLikeid(Long likeid) {
-		this.likeId = likeid;
+	public void setLikeId(Long likeId) {
+		this.likeId = likeId;
 	}
 
-	public Date getCreatetime() {
-		return createtime;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
-	@Override
-	public String toString() {
-		return "Likes{" +
-				"id='" + id + '\'' +
-				", count=" + count +
-				", likeid='" + likeId + '\'' +
-				", createtime=" + createtime +
-				'}';
+	public Date getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+
+	public void setLastUpdateTime(Date lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
+	}
+
+	public Long getDataStatus() {
+		return dataStatus;
+	}
+
+	public void setDataStatus(Long dataStatus) {
+		this.dataStatus = dataStatus;
 	}
 }

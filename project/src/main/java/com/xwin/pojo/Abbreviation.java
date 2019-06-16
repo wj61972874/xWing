@@ -1,7 +1,6 @@
 package com.xwin.pojo;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,12 +35,42 @@ public class Abbreviation  implements Serializable {
 	private java.util.Date createTime;
 
 	@Column(name = "create_by")
-	private String createBy;
+	private Long createBy;
 
 	@Column(name = "last_update_time")
 	private java.util.Date lastUpdateTime;
 
 	private Long type;
+
+	@Column(name = "liked_count")
+	private Long likedCount;
+
+	@Override
+	public String toString() {
+		return "Abbreviation{" +
+				"id=" + id +
+				", userId=" + userId +
+				", abbrName='" + abbrName + '\'' +
+				", fullName='" + fullName + '\'' +
+				", content='" + content + '\'' +
+				", imageId=" + imageId +
+				", dataStatus=" + dataStatus +
+				", createTime=" + createTime +
+				", createBy=" + createBy +
+				", lastUpdateTime=" + lastUpdateTime +
+				", type=" + type +
+				", likedCount=" + likedCount +
+				", image=" + image +
+				'}';
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
 
 	@Transient
 	private Image image;
@@ -110,11 +139,11 @@ public class Abbreviation  implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public String getCreateBy() {
+	public Long getCreateBy() {
 		return createBy;
 	}
 
-	public void setCreateBy(String createBy) {
+	public void setCreateBy(Long createBy) {
 		this.createBy = createBy;
 	}
 
@@ -134,29 +163,11 @@ public class Abbreviation  implements Serializable {
 		this.type = type;
 	}
 
-	public Image getImage() {
-		return image;
+	public Long getLikedCount() {
+		return likedCount;
 	}
 
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
-	@Override
-	public String toString() {
-		return "Abbreviation{" +
-				"id='" + id + '\'' +
-				", userId='" + userId + '\'' +
-				", abbrName='" + abbrName + '\'' +
-				", fullName='" + fullName + '\'' +
-				", content='" + content + '\'' +
-				", imageId='" + imageId + '\'' +
-				", dataStatus=" + dataStatus +
-				", createTime=" + createTime +
-				", createBy='" + createBy + '\'' +
-				", lastUpdateTime=" + lastUpdateTime +
-				", type=" + type +
-				", image=" + image +
-				'}';
+	public void setLikedCount(Long likedCount) {
+		this.likedCount = likedCount;
 	}
 }

@@ -8,6 +8,7 @@ import com.xwin.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,4 +34,25 @@ public class AbbreviationController {
         entry.setImage(image);
         return ReturnResult.build(200,"success",entry);
     }
+
+    @RequestMapping(value = "/like",method = RequestMethod.POST)
+    public ReturnResult likeAbbr(
+            @RequestParam(value = "userId") String userId,
+            @RequestParam(value = "entryId") String entryId){
+
+        Long id = Long.parseLong(userId);
+        Long abbrId = Long.parseLong(entryId);
+        return abbreviationService.likeAbbr(id, abbrId);
+    }
+
+    @RequestMapping(value = "/removeLike",method = RequestMethod.POST)
+    public ReturnResult removeLikeAbbr(
+            @RequestParam(value = "userId") String userId,
+            @RequestParam(value = "entryId") String entryId){
+
+        Long id = Long.parseLong(userId);
+        Long abbrId = Long.parseLong(entryId);
+        return abbreviationService.removeLikeAbbr(id, abbrId);
+    }
+
 }

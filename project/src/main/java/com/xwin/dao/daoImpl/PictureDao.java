@@ -17,4 +17,6 @@ public interface PictureDao extends JpaRepository<Image, Long> {
 
     @Query(value = "SELECT * FROM image WHERE id=?1",nativeQuery = true)
     public Image getImageById(Long entryId);
+
+    List<Image> findByAbbreviationId(Long abbrId);
 }
