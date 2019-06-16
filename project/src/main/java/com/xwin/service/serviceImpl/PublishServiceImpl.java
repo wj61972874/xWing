@@ -52,7 +52,7 @@ public class PublishServiceImpl implements PublishService {
             // 获取词条图片url
             List<Image> imagesList = abbreviation.getImageList();
             Object o =
-                    imagesList.isEmpty() ? abbrMap.put("item_image", "") : abbrMap.put("item_image", imagesList.get(0).getPath());
+                    imagesList.isEmpty() ? abbrMap.put("item_image", null) : abbrMap.put("item_image", imagesList.get(0).getPath());
 
             abbrList.add(abbrMap);
         }

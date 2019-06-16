@@ -15,6 +15,6 @@ public interface CollectDao extends JpaRepository<Collect, Long> {
     List<Collect> findByUserId(@Param("userId") Long userId);
 
     @Query(value = "select c from Collect c where c.userId = :userId and c.entryId =:entryId order by c.createTime desc")
-    Collect findByUserIdAndEntryId(Long userId, Long entryId);
+    Collect findByUserIdAndEntryId(@Param("userId") Long userId,@Param("entryId") Long entryId);
 
 }

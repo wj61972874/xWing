@@ -62,7 +62,7 @@ public class CollectServiceImpl implements CollectService {
 
             // 获取词条图片url
             List<Image> imagesList = abbreviation.getImageList();
-            Object o = imagesList.isEmpty() ? map.put("item_image", "") : map.put("item_image", imagesList.get(0).getPath());
+            Object o = imagesList.isEmpty() ? map.put("item_image", null) : map.put("item_image", imagesList.get(0).getPath());
 
             result.add(map);
         }
