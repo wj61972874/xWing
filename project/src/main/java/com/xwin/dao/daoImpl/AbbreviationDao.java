@@ -21,4 +21,6 @@ public interface AbbreviationDao extends JpaRepository<Abbreviation, Long> {
     List<Abbreviation> getAbbreviationByUserId(Long userId);
 
     List<Abbreviation> findByUserId(Long userId);
+
+
 }
