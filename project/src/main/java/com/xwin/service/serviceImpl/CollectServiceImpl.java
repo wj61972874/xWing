@@ -58,7 +58,9 @@ public class CollectServiceImpl implements CollectService {
             map.put("item_name", abbreviation.getAbbrName());
             map.put("item_content", abbreviation.getContent());
             map.put("collect_author", user.getNickname());
-            map.put("collect_time", collection.getCreateTime());
+
+            String create_time_sub = abbreviation.getCreateTime().toString().substring(0,10);
+            map.put("collect_time", create_time_sub);
 
             // 获取词条图片url
             List<Image> imagesList = abbreviation.getImageList();

@@ -74,7 +74,9 @@ public class FollowServiceImpl implements FollowService {
             map.put("follow_user_id", followedUser.getId());
             map.put("follow_username", followedUser.getNickname());
             map.put("follow_avatarUrl", followedUser.getAvatarUrl());
-            map.put("followTime", follow.getLastUpdateTime());
+
+            String create_time_sub = follow.getLastUpdateTime().toString().substring(0,10);
+            map.put("followTime", create_time_sub);
 
             // 获取被关注用户发布词条数量
             int count = abbreviationDao.countByUserId(follow.getFollowedUserId());
