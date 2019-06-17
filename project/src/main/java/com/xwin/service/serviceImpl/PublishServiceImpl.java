@@ -42,7 +42,8 @@ public class PublishServiceImpl implements PublishService {
         List<Map<String, Object>> abbrList = new ArrayList<>(abbreviations.size());
         for (Abbreviation abbreviation : abbreviations) {
             Map<String, Object> abbrMap = new HashMap<>();
-            abbrMap.put("abb_create_time", abbreviation.getCreateTime().toString());
+            String create_time_sub = abbreviation.getCreateTime().toString().substring(0,10);
+            abbrMap.put("abb_create_time", create_time_sub);
             abbrMap.put("abb_type", abbreviation.getType());
             abbrMap.put("item_name", abbreviation.getAbbrName());
             abbrMap.put("item_content", abbreviation.getContent());

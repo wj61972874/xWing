@@ -1,5 +1,7 @@
 package com.xwin.controller;
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BASE64DecoderStream;
+import com.xwin.common.Base64DecodeMultipartFile;
 import com.xwin.common.utils.JsonUtils;
 import com.xwin.pojo.Image;
 import com.xwin.service.PictureService;
@@ -18,18 +20,22 @@ public class ImageController {
     private PictureService pictureService;
 
     //图片上传方法
-    @RequestMapping(value = "/upload/img",method = RequestMethod.POST)
+    @RequestMapping(value = "/upload/img", method = RequestMethod.POST)
     @ResponseBody
-    public String updateImage(@PathVariable MultipartFile uploadFile){
-        Map result=pictureService.uploadPicture(uploadFile);
+//    public String updateImage(@PathVariable MultipartFile uploadFile){
+    public String updateImage(@RequestParam(value = "uploadFile") String uploadFile) {
+
+        MultipartFile multiFile = Base64DecodeMultipartFile.base64Convert(uploadFile);
+        Map result = pictureService.uploadPicture(multiFile);
         //为了保证浏览器兼容性，需要将result转换成json格式的字符串
-        String json= JsonUtils.objectToJson(result);
+        String json = JsonUtils.objectToJson(result);
         return json;
     }
 
-    @RequestMapping(value = "getImages/{imageType}",method = RequestMethod.GET)
-    public List<Image> getAllImages(@PathVariable Long imageType){
-        List<Image> imageList=pictureService.getAllImagesByType(imageType);
+    @RequestMapping(value = "getImages/{imageType}", method = RequestMethod.GET)
+    public List<Image> getAllImages(@PathVariable Long imageType) {
+        List<Image> imageList = pictureService.getAllImagesByType(imageType);
         return imageList;
     }
+
 }
