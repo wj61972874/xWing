@@ -1,12 +1,19 @@
 package com.xwin.controller;
 
-import com.xwin.common.Base64ToImage;
+import com.xwin.common.utils.RetCode;
 import com.xwin.common.utils.ReturnResult;
 import com.xwin.pojo.Abbreviation;
 import com.xwin.pojo.Image;
 import com.xwin.service.AbbreviationService;
 import com.xwin.service.PictureService;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
@@ -23,6 +30,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/abbreviation")
 public class AbbreviationController {
+
+    private String baseUrl="http://localhost:8888/solr/sundae";
 
     @Autowired
     private AbbreviationService abbreviationService;
@@ -105,5 +114,23 @@ public class AbbreviationController {
         System.out.println((map.get("backgroundImage")).length());
 
         return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/searchAbbreviation",method = RequestMethod.POST)
+    public ReturnResult searchAbbreviation(@RequestParam(value = "keyWords") String keyWords) throws SolrServerException, IOException {
+
+        SolrServer solrServer=new HttpSolrServer(baseUrl);
+        SolrQuery solrQuery=new SolrQuery();
+
+        solrQuery.set("q","*"+keyWords+"*");
+
+        QueryResponse response=solrServer.query(solrQuery);
+        SolrDocumentList solrDocuments= response.getResults();
+
+        if(solrDocuments.getNumFound()==0){
+            return ReturnResult.build(RetCode.FAIL,"there are no record");
+        }else{
+            return  ReturnResult.build(RetCode.SUCCESS,"success",solrDocuments);
+        }
     }
 }
