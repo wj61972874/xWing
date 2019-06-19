@@ -8,7 +8,7 @@ public interface AbbreviationService {
 
     public void getHotNews();
 
-    public Abbreviation getAbbreviationDetail(Long entryId);
+    public ReturnResult getAbbreviationDetail(Long entryId, Long userId);
     public ReturnResult getRecommendedEntryList();
     /**
      * 点赞词条
@@ -28,5 +28,5 @@ public interface AbbreviationService {
      * @return 业务结果对象
      */
     ReturnResult removeLikeAbbr(Long userId, Long abbrId);
-    public int uploadAddr(String id , String userId , String addr, String title,String content);
+    public int uploadAddr(String id , String userId , String addr, String title,String content,String type);
 }

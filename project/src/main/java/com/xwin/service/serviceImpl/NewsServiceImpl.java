@@ -19,7 +19,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public List<BannerNews> getLastestNews() {
 
-        List<BannerNews> newsList=newsDao.getWeekNews(DateUtils.getBeginDayOfWeek(),DateUtils.getEndDayOfWeek());
+        List<BannerNews> newsList=newsDao.getBannerNews();
         return newsList;
     }
 }

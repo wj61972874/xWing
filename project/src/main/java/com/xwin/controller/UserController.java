@@ -39,6 +39,12 @@ public class UserController {
         return userService.userLogin(verificationCode, phone);
     }
 
+    @RequestMapping(value = "/getExploreList", method = RequestMethod.GET)
+    public ReturnResult getExploreList(
+            @RequestParam(value = "userId") Long userId) {
+        return userService.getExploreList(userId);
+    }
+
 
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
     public ReturnResult updateUser(User user, MultipartFile uploadFile) {

@@ -13,6 +13,7 @@ import java.util.List;
 public class Abbreviation  implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "user_id")

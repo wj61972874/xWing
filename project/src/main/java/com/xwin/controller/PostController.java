@@ -45,7 +45,7 @@ public class PostController {
             e.printStackTrace();
         }
 
-       int status =  abbreviationService.uploadAddr("",userId,abbrId,title,content);
+       int status =  abbreviationService.uploadAddr("",userId,abbrId,title,content,"1");
         if(status==0){
             response.put("status","success");
             SolrServer solrServer=new HttpSolrServer(baseUrl);

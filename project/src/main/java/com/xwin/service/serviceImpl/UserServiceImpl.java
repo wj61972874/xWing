@@ -2,14 +2,8 @@ package com.xwin.service.serviceImpl;
 
 import com.xwin.common.GetPhoneMessage;
 import com.xwin.common.utils.*;
-import com.xwin.dao.daoImpl.AbbreviationDao;
-import com.xwin.dao.daoImpl.FollowDao;
-import com.xwin.dao.daoImpl.LikesDao;
-import com.xwin.dao.daoImpl.UserDao;
-import com.xwin.pojo.Abbreviation;
-import com.xwin.pojo.Follow;
-import com.xwin.pojo.Login;
-import com.xwin.pojo.User;
+import com.xwin.dao.daoImpl.*;
+import com.xwin.pojo.*;
 import com.xwin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +19,21 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private FollowDao followDao;
+
+    @Autowired
+    private AbbreviationDao abbreviationDao;
+
+    @Autowired
+    private LikesDao likesDao;
+
+    @Autowired
+    private CollectDao collectDao;
+
+    @Autowired
+    private PictureDao pictureDao;
+
     @Override
     public ReturnResult getPhoneMessage(String phone) {
 
@@ -36,7 +45,7 @@ public class UserServiceImpl implements UserService {
             user = new User();
             Date now = new Date();
             user.setId(IDUtils.genItemId());
-            user.setNickname(phone+"_"+now.getYear());
+            user.setNickname(phone + "_" + now.getYear());
             user.setCreateTime(now);
             user.setDataStatus(1L);
             user.setLastUpdateTime(now);
@@ -48,7 +57,7 @@ public class UserServiceImpl implements UserService {
             userDao.save(user);
         }
 
-        Map<String, Object> resultMap = new HashMap<>(1,1);
+        Map<String, Object> resultMap = new HashMap<>(1, 1);
         resultMap.put("code", randNum);
         return ReturnResult.build(RetCode.SUCCESS, "success", resultMap);
     }
@@ -76,6 +85,79 @@ public class UserServiceImpl implements UserService {
         }
 
         return ReturnResult.build(RetCode.FAIL, "验证码输入错误");
+    }
+
+    public void addAbbToMap(Abbreviation abb, Explore explore, String desc, User followedUser, Date eventTime) {
+        explore.setEvent_desc(desc);
+        explore.setItem_name(abb.getAbbrName());
+        explore.setItem_content(abb.getContent());
+
+        List<Image> imagesList = abb.getImageList();
+
+        if (!imagesList.isEmpty()) {
+            Image image = imagesList.get(0);
+            explore.setItem_image(image.getPath());
+        }
+
+        String convertedDate = RelativeDateFormat.format(eventTime);
+        explore.setEvent_time(convertedDate);
+        explore.setItem_date(eventTime);
+
+        explore.setItem_username(followedUser.getNickname());
+        explore.setItem_avatar(followedUser.getAvatarUrl());
+    }
+
+    @Override
+    public ReturnResult getExploreList(Long userId) {
+
+        Optional<User> userById = userDao.findById(userId);
+        if (userById.equals(Optional.empty())) {
+            return ReturnResult.build(RetCode.FAIL, "用户不存在");
+        }
+
+        List<Follow> follows = followDao.getUserFollow(userId);
+
+        List<Explore> result = new ArrayList<>();
+
+        for (Follow follow : follows) {
+            // 被关注用户
+            User followedUser = userDao.findById(follow.getFollowedUserId()).get();
+
+            Map<String, Object> unitMap;
+
+            // 获取被关注人发布的post
+            List<Abbreviation> abbs = abbreviationDao.findByUserId(follow.getFollowedUserId());
+            List<Likes> likes = likesDao.findByUserId(follow.getFollowedUserId());
+            List<Collect> collects = collectDao.findByUserId(follow.getFollowedUserId());
+
+            for (Abbreviation abb : abbs) {
+                Explore explore = new Explore();
+                addAbbToMap(abb, explore, "发布了新的词条，快来学习一下吧。", followedUser, abb.getCreateTime());
+                result.add(explore);
+            }
+
+            for (Likes like : likes) {
+                Explore explore = new Explore();
+                Abbreviation abb = abbreviationDao.findById(like.getLikeId()).get();
+                addAbbToMap(abb, explore, "点赞了这个词条，一起来看看。", followedUser, like.getCreateTime());
+                result.add(explore);
+            }
+
+            for (Collect collect : collects) {
+                Explore explore = new Explore();
+                Abbreviation abb = abbreviationDao.findById(collect.getEntryId()).get();
+                addAbbToMap(abb, explore, "xxx收藏了一个词条，到底有什么秘密？", followedUser, collect.getCreateTime());
+                result.add(explore);
+            }
+            result.sort(new Comparator<Explore>() {
+                public int compare(Explore o1, Explore o2){
+                    Date i1 = o1.getItem_date();
+                    Date i2 = o2.getItem_date();
+                    return i2.compareTo(i1);
+                }
+            });
+        }
+        return ReturnResult.build(RetCode.SUCCESS, "success", result);
     }
 
     public User insertUser(User user) {
@@ -139,7 +221,7 @@ public class UserServiceImpl implements UserService {
         // 数据持久化
         userDao.save(user);
 
-        return ReturnResult.build(RetCode.SUCCESS, "success",user);
+        return ReturnResult.build(RetCode.SUCCESS, "success", user);
     }
 
 

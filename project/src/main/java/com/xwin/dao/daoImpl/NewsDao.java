@@ -13,4 +13,7 @@ public interface NewsDao extends JpaRepository<BannerNews, Long> {
 
     @Query(value = "select *  from banner_news where create_time >=?1 and create_time <=?2",nativeQuery = true)
     public List<BannerNews> getWeekNews(Date weekBeginTime, Date weekEndTime);
+
+    @Query(value = "select *  from banner_news" ,nativeQuery = true)
+    public List<BannerNews> getBannerNews();
 }

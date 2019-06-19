@@ -1,6 +1,8 @@
 package com.xwin.controller;
 
 import com.xwin.common.utils.RetCode;
+import com.xwin.common.Base64ToImage;
+import com.xwin.common.utils.RetCode;
 import com.xwin.common.utils.ReturnResult;
 import com.xwin.pojo.Abbreviation;
 import com.xwin.pojo.Image;
@@ -30,7 +32,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/abbreviation")
 public class AbbreviationController {
-
     private String baseUrl="http://localhost:8888/solr/sundae";
 
     @Autowired
@@ -45,12 +46,11 @@ public class AbbreviationController {
         return null;
     }
 
-    @RequestMapping(value = "/getOneEntryDetail",method = RequestMethod.POST)
-    public ReturnResult getAbbreviationDetail(Long entryId){
-        Abbreviation entry=abbreviationService.getAbbreviationDetail(entryId);
-        Image image=pictureService.getImageById(entryId);
-        entry.setImage(image);
-        return ReturnResult.build(200,"success",entry);
+    @RequestMapping(value = "/getOneEntryDetail",method = RequestMethod.GET)
+    public ReturnResult getAbbreviationDetail(
+            @RequestParam Long entryId,
+            @RequestParam Long userId){
+        return abbreviationService.getAbbreviationDetail(entryId, userId);
     }
 
     @RequestMapping(value = "/getRecommendedEntryList",method = RequestMethod.GET)
@@ -85,11 +85,11 @@ public class AbbreviationController {
     public ResponseEntity enrollMessage(@RequestParam Map<String, String> map){
         Map<String,String> response =new HashMap<>();
         // System.out.println(map.toString());
-        String userId = "12222223";
+        String userId = map.get("userId");
         String abbrId = map.get("title1");
         String title = map.get("title2");
         String content = map.get("content");
-
+        String type = map.get("type");
         try {
             UUID uuid = UUID.randomUUID();
             String resourcePath  = ResourceUtils.getURL("classpath:").getPath();
@@ -103,7 +103,7 @@ public class AbbreviationController {
             e.printStackTrace();
         }
 
-        int status =  abbreviationService.uploadAddr("",userId,abbrId,title,content);
+        int status =  abbreviationService.uploadAddr("",userId,abbrId,title,content,type);
         if(status==0){
             response.put("status","success");
         }else
