@@ -47,26 +47,33 @@ public class AbbreviationServiceImpl implements AbbreviationService {
 
     @Override
     public ReturnResult getAbbreviationDetail(Long entryId, Long userId) {
-        // 获取用户
-        Optional<User> userById = userDao.findById(userId);
-        if (userById.equals(Optional.empty())) {
-            return ReturnResult.build(RetCode.FAIL, "用户不存在");
-        }
-        Collect collect = collectDao.findByUserIdAndEntryId(userId,entryId);
-        Likes like =  likesDao.findByUserIdAndLikeId(userId,entryId);
+
         Abbreviation abbr = abbreviationDao.getAbbreviationDetail(entryId);
         Map<String, Object> map = new HashMap<>(16, .75f);
         map.put("abbreviation", abbr);
-        if (collect == null) {
+
+        if (userId == null) {
             map.put("collect", false);
-        } else {
-            map.put("collect", true);
-        }
-        if (like == null) {
             map.put("like", false);
-        } else {
-            map.put("like", true);
+        }else {
+            Optional<User> userById = userDao.findById(userId);
+            if (userById.equals(Optional.empty())) {
+                return ReturnResult.build(RetCode.FAIL, "用户不存在");
+            }
+            Collect collect = collectDao.findByUserIdAndEntryId(userId,entryId);
+            Likes like =  likesDao.findByUserIdAndLikeId(userId,entryId);
+            if (collect == null) {
+                map.put("collect", false);
+            } else {
+                map.put("collect", true);
+            }
+            if (like == null) {
+                map.put("like", false);
+            } else {
+                map.put("like", true);
+            }
         }
+
         return ReturnResult.build(RetCode.SUCCESS, "success", map);
     }
 
