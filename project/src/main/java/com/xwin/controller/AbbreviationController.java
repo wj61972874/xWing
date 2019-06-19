@@ -1,5 +1,6 @@
 package com.xwin.controller;
 
+import com.xwin.common.utils.RetCode;
 import com.xwin.common.Base64ToImage;
 import com.xwin.common.utils.RetCode;
 import com.xwin.common.utils.ReturnResult;
@@ -14,6 +15,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
