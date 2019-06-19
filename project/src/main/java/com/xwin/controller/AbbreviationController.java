@@ -71,11 +71,11 @@ public class AbbreviationController {
     public ResponseEntity enrollMessage(@RequestParam Map<String, String> map){
         Map<String,String> response =new HashMap<>();
         // System.out.println(map.toString());
-        String userId = "12222223";
+        String userId = map.get("userId");
         String abbrId = map.get("title1");
         String title = map.get("title2");
         String content = map.get("content");
-
+        String type = map.get("type");
         try {
             UUID uuid = UUID.randomUUID();
             String resourcePath  = ResourceUtils.getURL("classpath:").getPath();
@@ -89,7 +89,7 @@ public class AbbreviationController {
             e.printStackTrace();
         }
 
-        int status =  abbreviationService.uploadAddr("",userId,abbrId,title,content);
+        int status =  abbreviationService.uploadAddr("",userId,abbrId,title,content,type);
         if(status==0){
             response.put("status","success");
         }else

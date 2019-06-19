@@ -137,21 +137,28 @@ public class AbbreviationServiceImpl implements AbbreviationService {
 
 
     @Override
-    public int uploadAddr(String id, String userId, String addr, String title, String content) {
+    public int uploadAddr(String id, String userId, String addr, String title, String content,String type ) {
 
         Date date = new Date();
 
         Abbreviation abbreviation = new Abbreviation();
-        abbreviation.setId(43l);
+      //  abbreviation.setId(43l);
         abbreviation.setUserId(Long.parseLong(userId) );
         abbreviation.setAbbrName(addr);
         abbreviation.setContent(content);
-        abbreviation.setFullName(title);
+        if(type!=null&&type.equals("1")){
+            abbreviation.setFullName(title);
+            abbreviation.setType(0l);
+        }else{
+            abbreviation.setType(1l);
+        }
+
         abbreviation.setCreateTime(date);
         abbreviation.setLastUpdateTime(date);
-        abbreviation.setType(1l);
+
         abbreviation.setDataStatus(1l);
         abbreviation.setCreateBy(Long.parseLong(userId));
+        abbreviation.setLikedCount(0l);
         abbreviationDao.save(abbreviation);
         return 0;
     }
