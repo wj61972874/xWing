@@ -19,8 +19,6 @@ import java.util.*;
 
 import java.util.Date;
 
-import static sun.misc.Version.print;
-
 @Service
 public class AbbreviationServiceImpl implements AbbreviationService {
     @Autowired
