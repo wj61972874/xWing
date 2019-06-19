@@ -58,17 +58,13 @@ public class CollectServiceImpl implements CollectService {
             map.put("item_name", abbreviation.getAbbrName());
             map.put("item_content", abbreviation.getContent());
             map.put("collect_author", user.getNickname());
-            map.put("collect_time", collection.getCreateTime());
+
+            String create_time_sub = abbreviation.getCreateTime().toString().substring(0,10);
+            map.put("collect_time", create_time_sub);
 
             // 获取词条图片url
-            List<Image> imagesList = pictureDao.findByAbbreviationId(abbreviation.getId());
-            List<Map<String, Object>> images = new ArrayList<>(imagesList.size());
-            for (Image image : imagesList) {
-                Map<String, Object> imageMap = new HashMap<>();
-                imageMap.put("imageUrl", image.getPath());
-                images.add(imageMap);
-            }
-            map.put("item_image", images);
+            List<Image> imagesList = abbreviation.getImageList();
+            Object o = imagesList.isEmpty() ? map.put("item_image", null) : map.put("item_image", imagesList.get(0).getPath());
 
             result.add(map);
         }

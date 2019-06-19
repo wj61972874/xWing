@@ -19,6 +19,8 @@ import java.util.*;
 
 import java.util.Date;
 
+import static sun.misc.Version.print;
+
 @Service
 public class AbbreviationServiceImpl implements AbbreviationService {
     @Autowired
@@ -36,6 +38,16 @@ public class AbbreviationServiceImpl implements AbbreviationService {
     @Override
     public void getHotNews() {
 
+    }
+
+    @Override
+    public ReturnResult getRecommendedEntryList() {
+        List list = new ArrayList();
+        list = abbreviationDao.getAllAbbreviation();
+//        Abbreviation abbreviation = abbreviationDao.findById(1L).get();
+//        List imagelist = abbreviation.getImageList();
+//        System.out.println(imagelist);
+        return ReturnResult.build(200,"success",list);
     }
 
     @Override

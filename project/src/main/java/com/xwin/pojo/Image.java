@@ -1,5 +1,6 @@
 package com.xwin.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,8 +19,14 @@ public class Image  implements Serializable {
 	@Column(name = "post_id")
 	private Long postId;
 
-	@Column(name = "abbreviation_id")
-	private Long abbreviationId;
+//	@Column(name = "abbreviation_id")
+//	private Long abbreviationId;
+
+
+    @ManyToOne
+    @JoinColumn(name = "abbreviation_id")
+    @JsonBackReference
+    private Abbreviation abbreviationId;
 
 	private String path;
 
@@ -54,11 +61,11 @@ public class Image  implements Serializable {
         this.postId = postId;
     }
 
-    public Long getAbbreviationId() {
+    public Abbreviation getAbbreviationId() {
         return abbreviationId;
     }
 
-    public void setAbbreviationId(Long abbreviationId) {
+    public void setAbbreviationId(Abbreviation abbreviationId) {
         this.abbreviationId = abbreviationId;
     }
 

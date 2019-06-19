@@ -44,6 +44,11 @@ public class AbbreviationController {
         return ReturnResult.build(200,"success",entry);
     }
 
+    @RequestMapping(value = "/getRecommendedEntryList",method = RequestMethod.GET)
+    public ReturnResult getRecommendedEntryList(){
+        return abbreviationService.getRecommendedEntryList();
+    }
+
     @RequestMapping(value = "/like",method = RequestMethod.POST)
     public ReturnResult likeAbbr(
             @RequestParam(value = "userId") String userId,

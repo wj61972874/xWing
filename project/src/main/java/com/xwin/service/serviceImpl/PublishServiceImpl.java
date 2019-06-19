@@ -42,7 +42,8 @@ public class PublishServiceImpl implements PublishService {
         List<Map<String, Object>> abbrList = new ArrayList<>(abbreviations.size());
         for (Abbreviation abbreviation : abbreviations) {
             Map<String, Object> abbrMap = new HashMap<>();
-            abbrMap.put("abb_create_time", abbreviation.getCreateTime().toString());
+            String create_time_sub = abbreviation.getCreateTime().toString().substring(0,10);
+            abbrMap.put("abb_create_time", create_time_sub);
             abbrMap.put("abb_type", abbreviation.getType());
             abbrMap.put("item_name", abbreviation.getAbbrName());
             abbrMap.put("item_content", abbreviation.getContent());
@@ -50,14 +51,10 @@ public class PublishServiceImpl implements PublishService {
             abbrMap.put("abb_fullName", abbreviation.getFullName());
 
             // 获取词条图片url
-            List<Image> imagesList = pictureDao.findByAbbreviationId(abbreviation.getId());
-            List<Map<String, Object>> images = new ArrayList<>(imagesList.size());
-            for (Image image : imagesList) {
-                Map<String, Object> imageMap = new HashMap<>();
-                imageMap.put("imageUrl", image.getPath());
-                images.add(imageMap);
-            }
-            abbrMap.put("item_image", images);
+            List<Image> imagesList = abbreviation.getImageList();
+            Object o =
+                    imagesList.isEmpty() ? abbrMap.put("item_image", null) : abbrMap.put("item_image", imagesList.get(0).getPath());
+
             abbrList.add(abbrMap);
         }
 
