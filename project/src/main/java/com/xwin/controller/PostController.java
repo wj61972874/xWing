@@ -2,6 +2,8 @@ package com.xwin.controller;
 
 import com.xwin.common.Base64ToImage;
 import com.xwin.service.AbbreviationService;
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.ResourceUtils;
@@ -16,6 +18,8 @@ import java.util.UUID;
 
 @RestController
 public class PostController {
+
+    private String baseUrl="http://localhost:8888/solr/sundae";
 
     @Autowired
     AbbreviationService abbreviationService;
@@ -44,6 +48,7 @@ public class PostController {
        int status =  abbreviationService.uploadAddr("",userId,abbrId,title,content,"1");
         if(status==0){
             response.put("status","success");
+            SolrServer solrServer=new HttpSolrServer(baseUrl);
         }else
         {
             response.put("status","error");

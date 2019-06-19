@@ -23,6 +23,14 @@ public interface UserService {
      */
     ReturnResult userLogin(String verificationCode, String phone);
 
+    /**
+     * 获取用户发现列表
+     *
+     * @param userId 用户id
+     * @return 业务结果对象
+     */
+    ReturnResult getExploreList(Long userId);
+
     User insertUser(User user);
 
     /**

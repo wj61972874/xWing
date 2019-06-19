@@ -8,7 +8,7 @@ public interface AbbreviationService {
 
     public void getHotNews();
 
-    public Abbreviation getAbbreviationDetail(Long entryId);
+    public ReturnResult getAbbreviationDetail(Long entryId, Long userId);
     public ReturnResult getRecommendedEntryList();
     /**
      * 点赞词条

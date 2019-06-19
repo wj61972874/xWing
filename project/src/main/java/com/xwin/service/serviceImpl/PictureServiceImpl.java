@@ -72,7 +72,7 @@ public class PictureServiceImpl implements PictureService {
 	public List<Image> getAllImagesByType(long type) {
 		Date weekBeginTime=DateUtils.getBeginDayOfWeek();
 		Date weekEndTime=DateUtils.getEndDayOfWeek();
-		return pictureDao.findAllByType(type,weekBeginTime,weekEndTime);
+		return pictureDao.findAllByType(type);
 	}
 
 	@Override

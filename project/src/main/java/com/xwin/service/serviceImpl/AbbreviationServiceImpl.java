@@ -3,14 +3,8 @@ package com.xwin.service.serviceImpl;
 import com.xwin.common.utils.IDUtils;
 import com.xwin.common.utils.RetCode;
 import com.xwin.common.utils.ReturnResult;
-import com.xwin.dao.daoImpl.AbbreviationDao;
-import com.xwin.dao.daoImpl.LikesDao;
-import com.xwin.dao.daoImpl.PictureDao;
-import com.xwin.dao.daoImpl.UserDao;
-import com.xwin.pojo.Abbreviation;
-import com.xwin.pojo.Image;
-import com.xwin.pojo.Likes;
-import com.xwin.pojo.User;
+import com.xwin.dao.daoImpl.*;
+import com.xwin.pojo.*;
 import com.xwin.service.AbbreviationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +27,9 @@ public class AbbreviationServiceImpl implements AbbreviationService {
     @Autowired
     private LikesDao likesDao;
 
+    @Autowired
+    private CollectDao collectDao;
+
     @Override
     public void getHotNews() {
 
@@ -49,8 +46,28 @@ public class AbbreviationServiceImpl implements AbbreviationService {
     }
 
     @Override
-    public Abbreviation getAbbreviationDetail(Long entryId) {
-        return abbreviationDao.getAbbreviationDetail(entryId);
+    public ReturnResult getAbbreviationDetail(Long entryId, Long userId) {
+        // 获取用户
+        Optional<User> userById = userDao.findById(userId);
+        if (userById.equals(Optional.empty())) {
+            return ReturnResult.build(RetCode.FAIL, "用户不存在");
+        }
+        Collect collect = collectDao.findByUserIdAndEntryId(userId,entryId);
+        Likes like =  likesDao.findByUserIdAndLikeId(userId,entryId);
+        Abbreviation abbr = abbreviationDao.getAbbreviationDetail(entryId);
+        Map<String, Object> map = new HashMap<>(16, .75f);
+        map.put("abbreviation", abbr);
+        if (collect == null) {
+            map.put("collect", false);
+        } else {
+            map.put("collect", true);
+        }
+        if (like == null) {
+            map.put("like", false);
+        } else {
+            map.put("like", true);
+        }
+        return ReturnResult.build(RetCode.SUCCESS, "success", map);
     }
 
     @Override
