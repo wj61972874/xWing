@@ -6,6 +6,7 @@ import com.xwin.common.utils.ReturnResult;
 import com.xwin.dao.daoImpl.*;
 import com.xwin.pojo.*;
 import com.xwin.service.AbbreviationService;
+import com.xwin.service.PictureService;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
@@ -20,7 +21,7 @@ import java.util.Date;
 
 @Service
 public class AbbreviationServiceImpl implements AbbreviationService {
-    private String baseUrl="http://localhost:8888/solr/sundae";
+    private String baseUrl = "http://localhost:8888/solr/sundae";
 
     @Autowired
     private AbbreviationDao abbreviationDao;
@@ -37,9 +38,18 @@ public class AbbreviationServiceImpl implements AbbreviationService {
     @Autowired
     private CollectDao collectDao;
 
+    @Autowired
+    private PictureService pictureService;
+
     @Override
     public void getHotNews() {
 
+    }
+
+    @Override
+    public ReturnResult getHotSearchResults() {
+        List<Abbreviation> list = abbreviationDao.getHotSearchResults();
+        return ReturnResult.build(200, "success", list);
     }
 
     @Override
@@ -49,7 +59,7 @@ public class AbbreviationServiceImpl implements AbbreviationService {
 //        Abbreviation abbreviation = abbreviationDao.findById(1L).get();
 //        List imagelist = abbreviation.getImageList();
 //        System.out.println(imagelist);
-        return ReturnResult.build(200,"success",list);
+        return ReturnResult.build(200, "success", list);
     }
 
     @Override
@@ -62,13 +72,13 @@ public class AbbreviationServiceImpl implements AbbreviationService {
         if (userId == null) {
             map.put("collect", false);
             map.put("like", false);
-        }else {
+        } else {
             Optional<User> userById = userDao.findById(userId);
             if (userById.equals(Optional.empty())) {
                 return ReturnResult.build(RetCode.FAIL, "用户不存在");
             }
-            Collect collect = collectDao.findByUserIdAndEntryId(userId,entryId);
-            Likes like =  likesDao.findByUserIdAndLikeId(userId,entryId);
+            Collect collect = collectDao.findByUserIdAndEntryId(userId, entryId);
+            Likes like = likesDao.findByUserIdAndLikeId(userId, entryId);
             if (collect == null) {
                 map.put("collect", false);
             } else {
@@ -178,19 +188,19 @@ public class AbbreviationServiceImpl implements AbbreviationService {
 
 
     @Override
-    public int uploadAddr(String id, String userId, String addr, String title, String content,String type ) throws IOException, SolrServerException {
+    public int uploadAddr(String id, String userId, String addr, String title, String content, String type, String image1, String image2, String image3) throws IOException, SolrServerException {
 
         Date date = new Date();
 
         Abbreviation abbreviation = new Abbreviation();
-      //  abbreviation.setId(43l);
-        abbreviation.setUserId(Long.parseLong(userId) );
+        //  abbreviation.setId(43l);
+        abbreviation.setUserId(Long.parseLong(userId));
         abbreviation.setAbbrName(addr);
         abbreviation.setContent(content);
-        if(type!=null&&type.equals("1")){
+        if (type != null && type.equals("1")) {
             abbreviation.setFullName(title);
             abbreviation.setType(0l);
-        }else{
+        } else {
             abbreviation.setType(1l);
         }
 
@@ -200,22 +210,26 @@ public class AbbreviationServiceImpl implements AbbreviationService {
         abbreviation.setDataStatus(1l);
         abbreviation.setCreateBy(Long.parseLong(userId));
         abbreviation.setLikedCount(0l);
+        abbreviation.setVisitedCount(0l);
         abbreviationDao.save(abbreviation);
-        this.insertToSolr(abbreviation);
+        pictureService.uploadImage(image1, abbreviation.getId(),"abbr");
+        pictureService.uploadImage(image2, abbreviation.getId(),"abbr");
+        pictureService.uploadImage(image3, abbreviation.getId(),"abbr");
+//        this.insertToSolr(abbreviation);
         return 0;
     }
 
     @Override
     public void insertToSolr(Abbreviation abbreviation) throws IOException, SolrServerException {
-        SolrServer solrServer=new HttpSolrServer(baseUrl);
+        SolrServer solrServer = new HttpSolrServer(baseUrl);
         SolrInputDocument input = new SolrInputDocument();
-        input.addField("id",abbreviation.getId());
-        input.addField("abbr_name",abbreviation.getAbbrName());
-        input.addField("full_name",abbreviation.getFullName());
-        input.addField("content",abbreviation.getContent());
-        input.addField("create_time",abbreviation.getCreateTime());
-        input.addField("create_by",abbreviation.getCreateBy());
-        input.addField("last_update_time",abbreviation.getLastUpdateTime());
+        input.addField("id", abbreviation.getId());
+        input.addField("abbr_name", abbreviation.getAbbrName());
+        input.addField("full_name", abbreviation.getFullName());
+        input.addField("content", abbreviation.getContent());
+        input.addField("create_time", abbreviation.getCreateTime());
+        input.addField("create_by", abbreviation.getCreateBy());
+        input.addField("last_update_time", abbreviation.getLastUpdateTime());
         solrServer.add(input);
         System.out.println("添加完成");
         solrServer.commit();

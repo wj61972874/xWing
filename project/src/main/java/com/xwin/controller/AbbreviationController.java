@@ -42,6 +42,11 @@ public class AbbreviationController {
         return null;
     }
 
+    @RequestMapping(value = "/getHotSearchResults",method = RequestMethod.GET)
+    public ReturnResult getHotSearchResults(){
+        return abbreviationService.getHotSearchResults();
+    }
+
     @RequestMapping(value = "/getOneEntryDetail",method = RequestMethod.GET)
     public ReturnResult getAbbreviationDetail(
             @RequestParam Long entryId,
@@ -86,20 +91,11 @@ public class AbbreviationController {
         String title = map.get("title2");
         String content = map.get("content");
         String type = map.get("type");
-        try {
-            UUID uuid = UUID.randomUUID();
-            String resourcePath  = ResourceUtils.getURL("classpath:").getPath();
+        String image1 = map.get("backgroundImage");
+        String image2 = map.get("backgroundImage2");
+        String image3 = map.get("backgroundImage3");
 
-            String imagePath = resourcePath.replace("/target/classes/","/src/main/resources/images/");
-            String finalImagePath = imagePath+uuid.toString()+'/';
-//            Base64ToImage.base64ToImageFile(map.get("backgroundImage"),finalImagePath+"back1.jpg");
-//            Base64ToImage.base64ToImageFile(map.get("backgroundImage2"),finalImagePath+"back2.jpg");
-//            Base64ToImage.base64ToImageFile(map.get("backgroundImage3"),finalImagePath+"back3.jpg");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        int status =  abbreviationService.uploadAddr("",userId,abbrId,title,content,type);
+        int status =  abbreviationService.uploadAddr("",userId,abbrId,title,content,type, image1, image2, image3);
         if(status==0){
             response.put("status","success");
             SolrServer solrServer=new HttpSolrServer(baseUrl);

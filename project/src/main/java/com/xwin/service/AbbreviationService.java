@@ -22,6 +22,8 @@ public interface AbbreviationService {
      */
     ReturnResult likeAbbr(Long userId, Long abbrId);
 
+    public ReturnResult getHotSearchResults();
+
 
     /**
      * 取消词条点赞
@@ -31,7 +33,7 @@ public interface AbbreviationService {
      * @return 业务结果对象
      */
     ReturnResult removeLikeAbbr(Long userId, Long abbrId);
-    public int uploadAddr(String id , String userId , String addr, String title,String content,String type) throws IOException, SolrServerException;
+    public int uploadAddr(String id , String userId , String addr, String title,String content,String type, String image1, String image2, String image3) throws IOException, SolrServerException;
 
     public void insertToSolr(Abbreviation abbreviation) throws IOException, SolrServerException;
 }
