@@ -1,11 +1,8 @@
 package com.xwin.controller;
 
 import com.xwin.common.utils.RetCode;
-import com.xwin.common.Base64ToImage;
-import com.xwin.common.utils.RetCode;
 import com.xwin.common.utils.ReturnResult;
 import com.xwin.pojo.Abbreviation;
-import com.xwin.pojo.Image;
 import com.xwin.service.AbbreviationService;
 import com.xwin.service.PictureService;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -15,7 +12,6 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
@@ -82,7 +78,7 @@ public class AbbreviationController {
 
 
     @RequestMapping(value = "/upload" ,method = RequestMethod.POST )
-    public ResponseEntity enrollMessage(@RequestParam Map<String, String> map){
+    public ResponseEntity enrollMessage(@RequestParam Map<String, String> map) throws IOException, SolrServerException {
         Map<String,String> response =new HashMap<>();
         // System.out.println(map.toString());
         String userId = map.get("userId");
@@ -106,6 +102,13 @@ public class AbbreviationController {
         int status =  abbreviationService.uploadAddr("",userId,abbrId,title,content,type);
         if(status==0){
             response.put("status","success");
+            SolrServer solrServer=new HttpSolrServer(baseUrl);
+            Abbreviation testBean =new Abbreviation();
+            testBean.setId(10000L);
+            testBean.setFullName("test");
+            testBean.setAbbrName("testData is testData");
+
+            //solrServer.addBean(abbreviation);
         }else
         {
             response.put("status","error");
@@ -126,7 +129,7 @@ public class AbbreviationController {
 
         QueryResponse response=solrServer.query(solrQuery);
         SolrDocumentList solrDocuments= response.getResults();
-
+        //abbreviationService.insertToSolr();
         if(solrDocuments.getNumFound()==0){
             return ReturnResult.build(RetCode.FAIL,"there are no record");
         }else{
