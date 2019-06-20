@@ -6,15 +6,22 @@ import com.xwin.common.utils.ReturnResult;
 import com.xwin.dao.daoImpl.*;
 import com.xwin.pojo.*;
 import com.xwin.service.AbbreviationService;
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 
 import java.util.Date;
 
 @Service
 public class AbbreviationServiceImpl implements AbbreviationService {
+    private String baseUrl="http://localhost:8888/solr/sundae";
+
     @Autowired
     private AbbreviationDao abbreviationDao;
 
@@ -171,7 +178,7 @@ public class AbbreviationServiceImpl implements AbbreviationService {
 
 
     @Override
-    public int uploadAddr(String id, String userId, String addr, String title, String content,String type ) {
+    public int uploadAddr(String id, String userId, String addr, String title, String content,String type ) throws IOException, SolrServerException {
 
         Date date = new Date();
 
@@ -194,6 +201,23 @@ public class AbbreviationServiceImpl implements AbbreviationService {
         abbreviation.setCreateBy(Long.parseLong(userId));
         abbreviation.setLikedCount(0l);
         abbreviationDao.save(abbreviation);
+        this.insertToSolr(abbreviation);
         return 0;
+    }
+
+    @Override
+    public void insertToSolr(Abbreviation abbreviation) throws IOException, SolrServerException {
+        SolrServer solrServer=new HttpSolrServer(baseUrl);
+        SolrInputDocument input = new SolrInputDocument();
+        input.addField("id",abbreviation.getId());
+        input.addField("abbr_name",abbreviation.getAbbrName());
+        input.addField("full_name",abbreviation.getFullName());
+        input.addField("content",abbreviation.getContent());
+        input.addField("create_time",abbreviation.getCreateTime());
+        input.addField("create_by",abbreviation.getCreateBy());
+        input.addField("last_update_time",abbreviation.getLastUpdateTime());
+        solrServer.add(input);
+        System.out.println("添加完成");
+        solrServer.commit();
     }
 }

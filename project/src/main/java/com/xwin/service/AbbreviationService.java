@@ -2,6 +2,9 @@ package com.xwin.service;
 
 import com.xwin.common.utils.ReturnResult;
 import com.xwin.pojo.Abbreviation;
+import org.apache.solr.client.solrj.SolrServerException;
+
+import java.io.IOException;
 
 
 public interface AbbreviationService {
@@ -28,5 +31,7 @@ public interface AbbreviationService {
      * @return 业务结果对象
      */
     ReturnResult removeLikeAbbr(Long userId, Long abbrId);
-    public int uploadAddr(String id , String userId , String addr, String title,String content,String type);
+    public int uploadAddr(String id , String userId , String addr, String title,String content,String type) throws IOException, SolrServerException;
+
+    public void insertToSolr(Abbreviation abbreviation) throws IOException, SolrServerException;
 }
