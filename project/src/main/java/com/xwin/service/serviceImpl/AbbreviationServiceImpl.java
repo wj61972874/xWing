@@ -39,6 +39,9 @@ public class AbbreviationServiceImpl implements AbbreviationService {
     private CollectDao collectDao;
 
     @Autowired
+    private FollowDao followDao;
+
+    @Autowired
     private PictureService pictureService;
 
     @Override
@@ -72,13 +75,18 @@ public class AbbreviationServiceImpl implements AbbreviationService {
         if (userId == null) {
             map.put("collect", false);
             map.put("like", false);
+            map.put("followed", false);
         } else {
             Optional<User> userById = userDao.findById(userId);
+
             if (userById.equals(Optional.empty())) {
                 return ReturnResult.build(RetCode.FAIL, "用户不存在");
             }
+
+            abbr.getUserId();
             Collect collect = collectDao.findByUserIdAndEntryId(userId, entryId);
             Likes like = likesDao.findByUserIdAndLikeId(userId, entryId);
+            Follow follow = followDao.findByUserIdAndFollowedUserId(userId,abbr.getUserId());
             if (collect == null) {
                 map.put("collect", false);
             } else {
@@ -88,6 +96,11 @@ public class AbbreviationServiceImpl implements AbbreviationService {
                 map.put("like", false);
             } else {
                 map.put("like", true);
+            }
+            if (follow == null) {
+                map.put("follow", false);
+            } else {
+                map.put("follow", true);
             }
         }
 

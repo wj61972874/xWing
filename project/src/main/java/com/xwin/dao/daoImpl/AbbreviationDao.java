@@ -23,7 +23,7 @@ public interface AbbreviationDao extends JpaRepository<Abbreviation, Long> {
 
     List<Abbreviation> findByUserId(Long userId);
 
-    @Query(value = "select abbr from Abbreviation abbr order by abbr.likedCount desc")
+    @Query(value = "select * from Abbreviation order by liked_count desc limit 5",nativeQuery = true)
     List<Abbreviation> getAllAbbreviation();
 
     @Query(value = "select * from Abbreviation order by visited_count desc limit 5",nativeQuery = true)
