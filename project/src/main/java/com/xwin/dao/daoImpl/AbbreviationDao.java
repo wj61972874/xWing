@@ -1,6 +1,7 @@
 package com.xwin.dao.daoImpl;
 
 import com.xwin.pojo.Abbreviation;
+import com.xwin.pojo.Image;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +25,8 @@ public interface AbbreviationDao extends JpaRepository<Abbreviation, Long> {
 
     @Query(value = "select abbr from Abbreviation abbr order by abbr.likedCount desc")
     List<Abbreviation> getAllAbbreviation();
+
+    @Query(value = "select * from Abbreviation order by visited_count desc limit 5",nativeQuery = true)
+    List<Abbreviation> getHotSearchResults();
+
 }

@@ -4,6 +4,7 @@ import com.xwin.common.GetPhoneMessage;
 import com.xwin.common.utils.*;
 import com.xwin.dao.daoImpl.*;
 import com.xwin.pojo.*;
+import com.xwin.service.PictureService;
 import com.xwin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PictureDao pictureDao;
+
+    @Autowired
+    private PictureService pictureService;
 
     @Override
     public ReturnResult getPhoneMessage(String phone) {
@@ -215,7 +219,8 @@ public class UserServiceImpl implements UserService {
         }
 
         if (avatar != null) {
-            user.setAvatarUrl(avatar);
+            String url = pictureService.uploadImage(avatar, userId, "user");
+            user.setAvatarUrl(url);
         }
 
         // 数据持久化

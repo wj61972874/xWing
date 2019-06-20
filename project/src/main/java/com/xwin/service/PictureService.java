@@ -13,4 +13,6 @@ public interface PictureService {
 	public List<Image> getAllImagesByType(long type);
 
     public Image getImageById(Long entryId);
+
+	public String uploadImage(String base64Data, Long abbrId, String type);
 }

@@ -13,8 +13,9 @@ import java.util.Date;
 @Table(name = "image")
 public class Image  implements Serializable {
 
-	@Id
-	private Long id;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
 
 	@Column(name = "post_id")
 	private Long postId;

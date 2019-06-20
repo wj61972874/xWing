@@ -38,4 +38,9 @@ public class ImageController {
         return imageList;
     }
 
+    @RequestMapping(value = "uploadTest", method = RequestMethod.POST)
+    public String uploadTest(String base64data, Long abbrId, String type) {
+        return pictureService.uploadImage(base64data, abbrId, type);
+    }
+
 }
