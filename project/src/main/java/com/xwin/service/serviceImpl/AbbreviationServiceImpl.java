@@ -92,20 +92,23 @@ public class AbbreviationServiceImpl implements AbbreviationService {
             Collect collect = collectDao.findByUserIdAndEntryId(userId, entryId);
             Likes like = likesDao.findByUserIdAndLikeId(userId, entryId);
             Follow follow = followDao.findByUserIdAndFollowedUserId(userId, abbr.getUserId());
-            if (collect == null) {
-                map.put("collect", false);
-            } else {
+
+            if (collect != null && collect.getDataStatus() == 1L) {
                 map.put("collect", true);
-            }
-            if (like == null) {
-                map.put("like", false);
             } else {
+                map.put("collect", false);
+            }
+
+            if (like != null && like.getDataStatus() == 1L) {
                 map.put("like", true);
-            }
-            if (follow == null) {
-                map.put("follow", false);
             } else {
+                map.put("like", false);
+            }
+
+            if (follow != null && follow.getDataStatus() == 1L) {
                 map.put("follow", true);
+            } else {
+                map.put("follow", false);
             }
         }
 
