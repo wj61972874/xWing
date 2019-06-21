@@ -1,5 +1,6 @@
 package com.xwin.service.serviceImpl;
 
+import com.xwin.common.utils.Constant;
 import com.xwin.common.utils.IDUtils;
 import com.xwin.common.utils.RetCode;
 import com.xwin.common.utils.ReturnResult;
@@ -9,8 +10,10 @@ import com.xwin.dao.daoImpl.LikesDao;
 import com.xwin.dao.daoImpl.UserDao;
 import com.xwin.pojo.Abbreviation;
 import com.xwin.pojo.Follow;
+import com.xwin.pojo.Message;
 import com.xwin.pojo.User;
 import com.xwin.service.FollowService;
+import com.xwin.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,9 @@ public class FollowServiceImpl implements FollowService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private MessageService messageService;
 
     @Override
     public ReturnResult removeFollow(Long userId, Long followedUserId) {
@@ -137,6 +143,16 @@ public class FollowServiceImpl implements FollowService {
         follow.setLastUpdateTime(now);
         followDao.save(follow);
 
-        return ReturnResult.build(RetCode.SUCCESS, "success");
+        String username = userDao.findById(userId).get().getNickname();
+        String op = "成为了你最新的粉丝哦";
+        String messageContent = username + op;
+
+        Message result = messageService.createMessage(followedUserId, Constant.MASSAGE_TYPE_FOLLOW, messageContent);
+
+        if (result!=null) {
+            return ReturnResult.build(RetCode.SUCCESS, "success");
+        } else {
+            return ReturnResult.build(RetCode.FAIL, "failure");
+        }
     }
 }

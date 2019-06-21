@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Repository
-public interface MessageDao extends JpaRepository<Message, String> {
+public interface MessageDao extends JpaRepository<Message, Long> {
     @Query(value = "select m from Message m where m.userId = :userId order by m.createTime desc")
 //    List<Message> findByUserId(@Param("userId") Long userId);
     Page<Message> findByUserId(@Param("userId") Long userId, Pageable pageable);

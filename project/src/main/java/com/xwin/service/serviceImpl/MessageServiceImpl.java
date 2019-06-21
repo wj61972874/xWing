@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +28,20 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public ReturnResult removeMessage(Long userId, Long messageId) {
-        return null;
+        Optional<User> userById = userDao.findById(userId);
+
+        if (userById.equals(Optional.empty())) {
+            return ReturnResult.build(RetCode.FAIL, "用户不存在");
+        }
+
+        Message message = messageDao.findById(messageId).get();
+        if (!message.getUserId().equals(userId)) {
+            return ReturnResult.build(RetCode.PARAMS_INVALID, "Invalid user to operate", "");
+        }
+        message.setDataStatus(0l);
+        message.setLastUpdateTime(new Date());
+        messageDao.save(message);
+        return ReturnResult.build(RetCode.SUCCESS, "success", message);
     }
 
     @Override
@@ -45,11 +59,34 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public ReturnResult readMessage(Long userId, Long messageId) {
-        return null;
+        Optional<User> userById = userDao.findById(userId);
+
+        if (userById.equals(Optional.empty())) {
+            return ReturnResult.build(RetCode.FAIL, "用户不存在");
+        }
+
+        Message message = messageDao.findById(messageId).get();
+        if (!message.getUserId().equals(userId)) {
+            return ReturnResult.build(RetCode.PARAMS_INVALID, "Invalid user to operate", "");
+        }
+        message.setReadFlag(1l);
+        message.setLastUpdateTime(new Date());
+        messageDao.save(message);
+        return ReturnResult.build(RetCode.SUCCESS, "success", message);
     }
 
     @Override
-    public ReturnResult createMessage(Long userId, String type) {
-        return null;
+    public Message createMessage(Long userId, Long type, String content) {
+        Message message = new Message();
+
+        message.setDataStatus(1l);
+        message.setReadFlag(0l);
+        message.setCreateTime(new Date());
+        message.setLastUpdateTime(new Date());
+        message.setType(type);
+        message.setContent(content);
+        message.setUserId(userId);
+        messageDao.save(message);
+        return message;
     }
 }

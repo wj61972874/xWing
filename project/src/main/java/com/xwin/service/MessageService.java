@@ -1,6 +1,7 @@
 package com.xwin.service;
 
 import com.xwin.common.utils.ReturnResult;
+import com.xwin.pojo.Message;
 
 public interface MessageService {
     /**
@@ -37,6 +38,6 @@ public interface MessageService {
      * @param type         消息类型
      * @return 业务结果对象
      */
-    ReturnResult createMessage(Long userId, String type);
+    Message createMessage(Long userId, Long type, String Content);
 
 }

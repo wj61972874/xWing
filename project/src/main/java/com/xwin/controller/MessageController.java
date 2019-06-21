@@ -21,4 +21,18 @@ public class MessageController {
             @RequestParam(value = "page") int page) {
         return messageService.getMessageList(userId, page);
     }
+
+    @RequestMapping(value = "/readMessage", method = RequestMethod.POST)
+    public ReturnResult readMessage(
+            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "messageId") Long messageId) {
+        return messageService.readMessage(userId, messageId);
+    }
+
+    @RequestMapping(value = "/removeMessage", method = RequestMethod.POST)
+    public ReturnResult removeMessage(
+            @RequestParam(value = "userId") Long userId,
+            @RequestParam(value = "messageId") Long messageId) {
+        return messageService.removeMessage(userId, messageId);
+    }
 }

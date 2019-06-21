@@ -1,14 +1,13 @@
 package com.xwin.service.serviceImpl;
 
+import com.xwin.common.utils.Constant;
 import com.xwin.common.utils.IDUtils;
 import com.xwin.common.utils.RetCode;
 import com.xwin.common.utils.ReturnResult;
 import com.xwin.dao.daoImpl.*;
-import com.xwin.pojo.Abbreviation;
-import com.xwin.pojo.Collect;
-import com.xwin.pojo.Image;
-import com.xwin.pojo.User;
+import com.xwin.pojo.*;
 import com.xwin.service.CollectService;
+import com.xwin.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +27,9 @@ public class CollectServiceImpl implements CollectService {
 
     @Autowired
     private PictureDao pictureDao;
+
+    @Autowired
+    private MessageService messageService;
 
     @Override
     public ReturnResult getUserCollection(Long userId) {
@@ -149,7 +151,17 @@ public class CollectServiceImpl implements CollectService {
         collection.setCreateTime(now);
         collectDao.save(collection);
 
-        return ReturnResult.build(RetCode.SUCCESS, "success");
-    }
+        String username = userDao.findById(userId).get().getNickname();
+        String op = "收藏了你的词条";
+        String abbrName = abbr.get().getAbbrName();
+        String messageContent = username + op + abbrName;
 
+        Message message = messageService.createMessage(abbr.get().getUserId(), Constant.MASSAGE_TYPE_COLLECT, messageContent);
+
+        if (message!=null) {
+            return ReturnResult.build(RetCode.SUCCESS, "success");
+        } else {
+            return ReturnResult.build(RetCode.FAIL, "failure");
+        }
+    }
 }

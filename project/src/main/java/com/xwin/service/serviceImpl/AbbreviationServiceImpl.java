@@ -1,11 +1,13 @@
 package com.xwin.service.serviceImpl;
 
+import com.xwin.common.utils.Constant;
 import com.xwin.common.utils.IDUtils;
 import com.xwin.common.utils.RetCode;
 import com.xwin.common.utils.ReturnResult;
 import com.xwin.dao.daoImpl.*;
 import com.xwin.pojo.*;
 import com.xwin.service.AbbreviationService;
+import com.xwin.service.MessageService;
 import com.xwin.service.PictureService;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -43,6 +45,9 @@ public class AbbreviationServiceImpl implements AbbreviationService {
 
     @Autowired
     private PictureService pictureService;
+
+    @Autowired
+    private MessageService messageService;
 
     @Override
     public void getHotNews() {
@@ -86,7 +91,7 @@ public class AbbreviationServiceImpl implements AbbreviationService {
             abbr.getUserId();
             Collect collect = collectDao.findByUserIdAndEntryId(userId, entryId);
             Likes like = likesDao.findByUserIdAndLikeId(userId, entryId);
-            Follow follow = followDao.findByUserIdAndFollowedUserId(userId,abbr.getUserId());
+            Follow follow = followDao.findByUserIdAndFollowedUserId(userId, abbr.getUserId());
             if (collect == null) {
                 map.put("collect", false);
             } else {
@@ -152,7 +157,18 @@ public class AbbreviationServiceImpl implements AbbreviationService {
         abbreviation.setLikedCount(abbreviation.getLikedCount() + 1);
         abbreviationDao.save(abbreviation);
 
-        return ReturnResult.build(RetCode.SUCCESS, "success");
+        String username = userDao.findById(userId).get().getNickname();
+        String op = "爱上了你的分享";
+        String abbrName = abbreviationDao.findById(abbrId).get().getAbbrName();
+        String messageContent = username + op + abbrName;
+
+        Message result = messageService.createMessage(abbreviation.getUserId(), Constant.MASSAGE_TYPE_LIKE, messageContent);
+
+        if (result != null) {
+            return ReturnResult.build(RetCode.SUCCESS, "success");
+        } else {
+            return ReturnResult.build(RetCode.FAIL, "failure");
+        }
     }
 
     @Override
@@ -225,9 +241,9 @@ public class AbbreviationServiceImpl implements AbbreviationService {
         abbreviation.setLikedCount(0l);
         abbreviation.setVisitedCount(0l);
         abbreviationDao.save(abbreviation);
-        pictureService.uploadImage(image1, abbreviation.getId(),"abbr");
-        pictureService.uploadImage(image2, abbreviation.getId(),"abbr");
-        pictureService.uploadImage(image3, abbreviation.getId(),"abbr");
+        pictureService.uploadImage(image1, abbreviation.getId(), "abbr");
+        pictureService.uploadImage(image2, abbreviation.getId(), "abbr");
+        pictureService.uploadImage(image3, abbreviation.getId(), "abbr");
 //        this.insertToSolr(abbreviation);
         return 0;
     }

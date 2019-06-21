@@ -4,6 +4,7 @@ import com.xwin.common.GetPhoneMessage;
 import com.xwin.common.utils.*;
 import com.xwin.dao.daoImpl.*;
 import com.xwin.pojo.*;
+import com.xwin.service.MessageService;
 import com.xwin.service.PictureService;
 import com.xwin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PictureService pictureService;
 
+    @Autowired
+    private MessageService messageService;
+
     @Override
     public ReturnResult getPhoneMessage(String phone) {
 
@@ -56,6 +60,18 @@ public class UserServiceImpl implements UserService {
             user.setUsername(phone);
             user.setVerificationCode(randNum);
             userDao.save(user);
+
+            String username = userDao.findById(user.getId()).get().getNickname();
+            String op = "亲爱的"+username+"，欢迎来到Sundae，有你的加入我们的故事一定会更精彩哒！";
+            String messageContent = username + op;
+
+            Message result = messageService.createMessage(user.getId(), Constant.MASSAGE_TYPE_COLLECT, messageContent);
+
+            if (result!=null) {
+                return ReturnResult.build(RetCode.SUCCESS, "success");
+            } else {
+                return ReturnResult.build(RetCode.FAIL, "failure");
+            }
         } else {
             user.setVerificationCode(randNum);
             userDao.save(user);
