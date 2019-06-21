@@ -29,4 +29,7 @@ public interface AbbreviationDao extends JpaRepository<Abbreviation, Long> {
     @Query(value = "select * from Abbreviation order by visited_count desc limit 5",nativeQuery = true)
     List<Abbreviation> getHotSearchResults();
 
+
+    @Query(nativeQuery = true, value = "select * from Abbreviation where abbr_name like CONCAT('%',:keyWords,'%') or full_name like CONCAT('%',:keyWords,'%') ORDER BY abbr_name DESC ")
+    List<Abbreviation> getAbbreviationByKeyWords(@Param("keyWords") String keyWords);
 }

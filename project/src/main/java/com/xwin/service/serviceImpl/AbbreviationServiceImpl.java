@@ -266,4 +266,9 @@ public class AbbreviationServiceImpl implements AbbreviationService {
         System.out.println("添加完成");
         solrServer.commit();
     }
+
+    @Override
+    public List<Abbreviation> getAbbreviationByKeyWords(String keyWords) {
+        return abbreviationDao.getAbbreviationByKeyWords(keyWords);
+    }
 }

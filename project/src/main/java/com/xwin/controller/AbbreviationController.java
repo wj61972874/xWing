@@ -121,7 +121,7 @@ public class AbbreviationController {
         SolrServer solrServer=new HttpSolrServer(baseUrl);
         SolrQuery solrQuery=new SolrQuery();
 
-        solrQuery.set("q","*"+keyWords+"*");
+        solrQuery.set("q",keyWords);
 
         QueryResponse response=solrServer.query(solrQuery);
         SolrDocumentList solrDocuments= response.getResults();

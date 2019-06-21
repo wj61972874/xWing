@@ -39,7 +39,11 @@ public class GetPhoneMessage {
         httpArg.append("c=").append(encodeUrlString(smsContent, "UTF-8"));
 
         String result = request(BASE_URL, httpArg.toString());
-        return result;
+        if("0".equals(result)){
+            return randNum;
+        }else{
+            return "0";
+        }
     }
 
     public static String request(String httpUrl, String httpArg) {

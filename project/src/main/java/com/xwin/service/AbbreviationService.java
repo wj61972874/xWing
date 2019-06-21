@@ -5,6 +5,7 @@ import com.xwin.pojo.Abbreviation;
 import org.apache.solr.client.solrj.SolrServerException;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public interface AbbreviationService {
@@ -36,4 +37,6 @@ public interface AbbreviationService {
     public int uploadAddr(String id , String userId , String addr, String title,String content,String type, String image1, String image2, String image3) throws IOException, SolrServerException;
 
     public void insertToSolr(Abbreviation abbreviation) throws IOException, SolrServerException;
+
+    public List<Abbreviation> getAbbreviationByKeyWords(String keyWords);
 }
