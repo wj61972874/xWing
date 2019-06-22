@@ -118,9 +118,13 @@ public class PictureServiceImpl implements PictureService {
             String imgUrl = imageServerUrl + type + "/" + abbrId + "/" + tempFileName;
             Image image = new Image();
             image.setPath(imgUrl);
-            image.setType(3L);
+
+
             if (type=="abbr") {
                 image.setAbbreviationId(abbreviationDao.findById(abbrId).get());
+                image.setType(1L);
+            } else {
+                image.setType(2L);
             }
 
             image.setCreateTime(date);

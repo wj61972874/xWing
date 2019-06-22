@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
             String op = "亲爱的"+username+"，欢迎来到Sundae，有你的加入我们的故事一定会更精彩哒！";
             String messageContent = username + op;
 
-            Message result = messageService.createMessage(user.getId(), Constant.MASSAGE_TYPE_COLLECT, messageContent);
+            Message result = messageService.createMessage(user.getId(), Constant.MASSAGE_TYPE_SYSTEM, messageContent);
 
             if (result!=null) {
                 return ReturnResult.build(RetCode.SUCCESS, "success");

@@ -28,7 +28,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/abbreviation")
 public class AbbreviationController {
-    private String baseUrl="http://localhost:8888/solr/sundae";
+    private String baseUrl = "http://localhost:8888/solr/sundae";
 
     @Autowired
     private AbbreviationService abbreviationService;
@@ -36,43 +36,43 @@ public class AbbreviationController {
     @Autowired
     private PictureService pictureService;
 
-    @RequestMapping(value = "/getHotEntry",method = RequestMethod.GET)
-    public ReturnResult getHotNews(){
+    @RequestMapping(value = "/getHotEntry", method = RequestMethod.GET)
+    public ReturnResult getHotNews() {
         abbreviationService.getHotNews();
         return null;
     }
 
-    @RequestMapping(value = "/getHotSearchResults",method = RequestMethod.GET)
-    public ReturnResult getHotSearchResults(){
+    @RequestMapping(value = "/getHotSearchResults", method = RequestMethod.GET)
+    public ReturnResult getHotSearchResults() {
         return abbreviationService.getHotSearchResults();
     }
 
-    @RequestMapping(value = "/getOneEntryDetail",method = RequestMethod.GET)
+    @RequestMapping(value = "/getOneEntryDetail", method = RequestMethod.GET)
     public ReturnResult getAbbreviationDetail(
             @RequestParam Long entryId,
-            @RequestParam Long userId){
+            @RequestParam Long userId) {
         return abbreviationService.getAbbreviationDetail(entryId, userId);
     }
 
-    @RequestMapping(value = "/getRecommendedEntryList",method = RequestMethod.GET)
-    public ReturnResult getRecommendedEntryList(){
+    @RequestMapping(value = "/getRecommendedEntryList", method = RequestMethod.GET)
+    public ReturnResult getRecommendedEntryList() {
         return abbreviationService.getRecommendedEntryList();
     }
 
-    @RequestMapping(value = "/like",method = RequestMethod.POST)
+    @RequestMapping(value = "/like", method = RequestMethod.POST)
     public ReturnResult likeAbbr(
             @RequestParam(value = "userId") String userId,
-            @RequestParam(value = "entryId") String entryId){
+            @RequestParam(value = "entryId") String entryId) {
 
         Long id = Long.parseLong(userId);
         Long abbrId = Long.parseLong(entryId);
         return abbreviationService.likeAbbr(id, abbrId);
     }
 
-    @RequestMapping(value = "/removeLike",method = RequestMethod.POST)
+    @RequestMapping(value = "/removeLike", method = RequestMethod.POST)
     public ReturnResult removeLikeAbbr(
             @RequestParam(value = "userId") String userId,
-            @RequestParam(value = "entryId") String entryId){
+            @RequestParam(value = "entryId") String entryId) {
 
         Long id = Long.parseLong(userId);
         Long abbrId = Long.parseLong(entryId);
@@ -80,11 +80,9 @@ public class AbbreviationController {
     }
 
 
-
-
-    @RequestMapping(value = "/upload" ,method = RequestMethod.POST )
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity enrollMessage(@RequestParam Map<String, String> map) throws IOException, SolrServerException {
-        Map<String,String> response =new HashMap<>();
+        Map<String, String> response = new HashMap<>();
         // System.out.println(map.toString());
         String userId = map.get("userId");
         String abbrId = map.get("title1");
@@ -95,19 +93,18 @@ public class AbbreviationController {
         String image2 = map.get("backgroundImage2");
         String image3 = map.get("backgroundImage3");
 
-        int status =  abbreviationService.uploadAddr("",userId,abbrId,title,content,type, image1, image2, image3);
-        if(status==0){
-            response.put("status","success");
-            SolrServer solrServer=new HttpSolrServer(baseUrl);
-            Abbreviation testBean =new Abbreviation();
+        int status = abbreviationService.uploadAddr("", userId, abbrId, title, content, type, image1, image2, image3);
+        if (status == 0) {
+            response.put("status", "success");
+            SolrServer solrServer = new HttpSolrServer(baseUrl);
+            Abbreviation testBean = new Abbreviation();
             testBean.setId(10000L);
             testBean.setFullName("test");
             testBean.setAbbrName("testData is testData");
 
             //solrServer.addBean(abbreviation);
-        }else
-        {
-            response.put("status","error");
+        } else {
+            response.put("status", "error");
         }
 
         System.out.println((map.get("backgroundImage")).length());
@@ -115,21 +112,21 @@ public class AbbreviationController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/searchAbbreviation",method = RequestMethod.POST)
+    @RequestMapping(value = "/searchAbbreviation", method = RequestMethod.POST)
     public ReturnResult searchAbbreviation(@RequestParam(value = "keyWords") String keyWords) throws SolrServerException, IOException {
 
-        SolrServer solrServer=new HttpSolrServer(baseUrl);
-        SolrQuery solrQuery=new SolrQuery();
+        SolrServer solrServer = new HttpSolrServer(baseUrl);
+        SolrQuery solrQuery = new SolrQuery();
 
-        solrQuery.set("q",keyWords);
+        solrQuery.set("q", keyWords);
 
-        QueryResponse response=solrServer.query(solrQuery);
-        SolrDocumentList solrDocuments= response.getResults();
+        QueryResponse response = solrServer.query(solrQuery);
+        SolrDocumentList solrDocuments = response.getResults();
         //abbreviationService.insertToSolr();
-        if(solrDocuments.getNumFound()==0){
-            return ReturnResult.build(RetCode.FAIL,"there are no record");
-        }else{
-            return  ReturnResult.build(RetCode.SUCCESS,"success",solrDocuments);
+        if (solrDocuments.getNumFound() == 0) {
+            return ReturnResult.build(RetCode.FAIL, "there are no record");
+        } else {
+            return ReturnResult.build(RetCode.SUCCESS, "success", solrDocuments);
         }
     }
 }

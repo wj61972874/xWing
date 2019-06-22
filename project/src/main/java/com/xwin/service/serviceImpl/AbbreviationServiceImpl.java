@@ -77,6 +77,11 @@ public class AbbreviationServiceImpl implements AbbreviationService {
         Map<String, Object> map = new HashMap<>(16, .75f);
         map.put("abbreviation", abbr);
 
+        Long authorId = abbr.getUserId();
+        User author = userDao.findById(authorId).get();
+        String authorname = author.getNickname();
+        map.put("author", authorname);
+
         if (userId == null) {
             map.put("collect", false);
             map.put("like", false);
