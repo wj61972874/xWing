@@ -1,6 +1,5 @@
 package com.xwin.controller;
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BASE64DecoderStream;
 import com.xwin.common.Base64DecodeMultipartFile;
 import com.xwin.common.utils.JsonUtils;
 import com.xwin.pojo.Image;
