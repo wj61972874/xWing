@@ -79,8 +79,8 @@ public class AbbreviationServiceImpl implements AbbreviationService {
 
         Long authorId = abbr.getUserId();
         User author = userDao.findById(authorId).get();
-        String authorname = author.getNickname();
-        map.put("author", authorname);
+        map.put("author", author.getNickname());
+        map.put("avatar", author.getAvatarUrl());
 
         if (userId == null) {
             map.put("collect", false);
