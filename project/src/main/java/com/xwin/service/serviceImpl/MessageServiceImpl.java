@@ -90,4 +90,17 @@ public class MessageServiceImpl implements MessageService {
         messageDao.save(message);
         return message;
     }
+
+    @Override
+    public ReturnResult readAll(Long userId) {
+        messageDao.readAllMessage(userId);
+        return ReturnResult.build(RetCode.SUCCESS, "success", true);
+    }
+
+    @Override
+    public ReturnResult checkHasUnread(Long userId) {
+        int count = messageDao.checkHasUnread(userId);
+        boolean hasUnread = count > 0 ? true : false;
+        return ReturnResult.build(RetCode.SUCCESS, "success", hasUnread);
+    }
 }

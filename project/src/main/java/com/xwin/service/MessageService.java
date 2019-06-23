@@ -40,4 +40,8 @@ public interface MessageService {
      */
     Message createMessage(Long userId, Long type, String Content);
 
+    ReturnResult readAll(Long userId);
+
+    ReturnResult checkHasUnread(Long userId);
+
 }

@@ -36,4 +36,16 @@ public class MessageController {
             @RequestParam(value = "listSize") Long listSize) {
         return messageService.removeMessage(userId, messageId, listSize);
     }
+
+    @RequestMapping(value = "/readAll", method = RequestMethod.POST)
+    public ReturnResult readAll(
+            @RequestParam(value = "userId") Long userId) {
+        return messageService.readAll(userId);
+    }
+
+    @RequestMapping(value = "/checkHasUnread", method = RequestMethod.GET)
+    public ReturnResult checkHasUnread(
+            @RequestParam(value = "userId") Long userId) {
+        return messageService.checkHasUnread(userId);
+    }
 }
