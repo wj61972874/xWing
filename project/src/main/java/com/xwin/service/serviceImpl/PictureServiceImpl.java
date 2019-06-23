@@ -5,8 +5,10 @@ import com.xwin.common.utils.FtpUtil;
 import com.xwin.common.utils.IDUtils;
 import com.xwin.dao.daoImpl.AbbreviationDao;
 import com.xwin.dao.daoImpl.PictureDao;
+import com.xwin.dao.daoImpl.UserDao;
 import com.xwin.pojo.Abbreviation;
 import com.xwin.pojo.Image;
+import com.xwin.pojo.User;
 import com.xwin.service.PictureService;
 
 import org.apache.commons.codec.binary.Base64;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -28,6 +31,9 @@ public class PictureServiceImpl implements PictureService {
 
     @Autowired
     private AbbreviationDao abbreviationDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Value("${FTP_ADDRESS}")
     private String FTP_ADDRESS;
@@ -119,11 +125,17 @@ public class PictureServiceImpl implements PictureService {
             Image image = new Image();
             image.setPath(imgUrl);
 
-
-            if (type=="abbr") {
+            if (type == "abbr") {
                 image.setAbbreviationId(abbreviationDao.findById(abbrId).get());
                 image.setType(1L);
             } else {
+                User user = userDao.findById(abbrId).get();
+                String url = IMAGE_LOCAL_URL.replace("/images/", "") + user.getAvatarUrl();
+
+                File file = new File(url);
+                if (file.exists() && file.isFile())
+                    file.delete();
+
                 image.setType(2L);
             }
 

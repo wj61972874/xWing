@@ -11,7 +11,7 @@ public interface MessageService {
      * @param messageId      消息id
      * @return 业务结果对象
      */
-    ReturnResult removeMessage(Long userId, Long messageId);
+    ReturnResult removeMessage(Long userId, Long messageId, Long listSize);
 
     /**
      * 个人消息列表

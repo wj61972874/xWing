@@ -8,6 +8,7 @@ import com.xwin.service.MessageService;
 import com.xwin.service.PictureService;
 import com.xwin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -42,6 +43,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private MessageService messageService;
 
+    @Value("${IMAGE_LOCAL_URL}")
+    private String IMAGE_LOCAL_URL;
+
     @Override
     public ReturnResult getPhoneMessage(String phone) {
 
@@ -62,12 +66,12 @@ public class UserServiceImpl implements UserService {
             userDao.save(user);
 
             String username = userDao.findById(user.getId()).get().getNickname();
-            String op = "亲爱的"+username+"，欢迎来到Sundae，有你的加入我们的故事一定会更精彩哒！";
-            String messageContent = username + op;
+            String op = "亲爱的" + username + "，欢迎来到Sundae，有你的加入我们的故事一定会更精彩哒！";
+            String messageContent = op;
 
             Message result = messageService.createMessage(user.getId(), Constant.MASSAGE_TYPE_SYSTEM, messageContent);
 
-            if (result!=null) {
+            if (result != null) {
                 return ReturnResult.build(RetCode.SUCCESS, "success");
             } else {
                 return ReturnResult.build(RetCode.FAIL, "failure");
@@ -170,7 +174,7 @@ public class UserServiceImpl implements UserService {
                 result.add(explore);
             }
             result.sort(new Comparator<Explore>() {
-                public int compare(Explore o1, Explore o2){
+                public int compare(Explore o1, Explore o2) {
                     Date i1 = o1.getItem_date();
                     Date i2 = o2.getItem_date();
                     return i2.compareTo(i1);

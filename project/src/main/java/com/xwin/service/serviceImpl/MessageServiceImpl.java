@@ -27,7 +27,7 @@ public class MessageServiceImpl implements MessageService {
     private MessageDao messageDao;
 
     @Override
-    public ReturnResult removeMessage(Long userId, Long messageId) {
+    public ReturnResult removeMessage(Long userId, Long messageId, Long listSize) {
         Optional<User> userById = userDao.findById(userId);
 
         if (userById.equals(Optional.empty())) {
@@ -41,7 +41,8 @@ public class MessageServiceImpl implements MessageService {
         message.setDataStatus(0l);
         message.setLastUpdateTime(new Date());
         messageDao.save(message);
-        return ReturnResult.build(RetCode.SUCCESS, "success", message);
+        Message nextMessage = messageDao.findByPosition(userId, listSize - 1l);
+        return ReturnResult.build(RetCode.SUCCESS, "success", nextMessage);
     }
 
     @Override

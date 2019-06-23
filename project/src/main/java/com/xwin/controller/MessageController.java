@@ -29,10 +29,11 @@ public class MessageController {
         return messageService.readMessage(userId, messageId);
     }
 
-    @RequestMapping(value = "/removeMessage", method = RequestMethod.POST)
+    @RequestMapping(value = "/remove", method = RequestMethod.POST)
     public ReturnResult removeMessage(
             @RequestParam(value = "userId") Long userId,
-            @RequestParam(value = "messageId") Long messageId) {
-        return messageService.removeMessage(userId, messageId);
+            @RequestParam(value = "messageId") Long messageId,
+            @RequestParam(value = "listSize") Long listSize) {
+        return messageService.removeMessage(userId, messageId, listSize);
     }
 }

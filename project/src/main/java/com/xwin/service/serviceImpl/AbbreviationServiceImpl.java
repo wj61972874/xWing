@@ -77,6 +77,8 @@ public class AbbreviationServiceImpl implements AbbreviationService {
         Map<String, Object> map = new HashMap<>(16, .75f);
         map.put("abbreviation", abbr);
 
+        abbr.setVisitedCount(abbr.getVisitedCount() + 1);
+
         Long authorId = abbr.getUserId();
         User author = userDao.findById(authorId).get();
         map.put("author", author.getNickname());
@@ -116,7 +118,7 @@ public class AbbreviationServiceImpl implements AbbreviationService {
                 map.put("follow", false);
             }
         }
-
+        abbreviationDao.save(abbr);
         return ReturnResult.build(RetCode.SUCCESS, "success", map);
     }
 
