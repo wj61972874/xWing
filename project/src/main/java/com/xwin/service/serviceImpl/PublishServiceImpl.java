@@ -43,6 +43,7 @@ public class PublishServiceImpl implements PublishService {
         for (Abbreviation abbreviation : abbreviations) {
             Map<String, Object> abbrMap = new HashMap<>();
             String create_time_sub = abbreviation.getCreateTime().toString().substring(0,10);
+            abbrMap.put("item_id", abbreviation.getId());
             abbrMap.put("abb_create_time", create_time_sub);
             abbrMap.put("abb_type", abbreviation.getType());
             abbrMap.put("item_name", abbreviation.getAbbrName());
