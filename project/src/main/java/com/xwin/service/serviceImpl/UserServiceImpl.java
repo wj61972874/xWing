@@ -154,23 +154,39 @@ public class UserServiceImpl implements UserService {
             List<Likes> likes = likesDao.findByUserId(follow.getFollowedUserId());
             List<Collect> collects = collectDao.findByUserId(follow.getFollowedUserId());
 
+            String abbrType = "";
             for (Abbreviation abb : abbs) {
                 Explore explore = new Explore();
-                addAbbToMap(abb, explore, "发布了新的词条，快来学习一下吧。", followedUser, abb.getCreateTime());
+                if (abb.getType() == 0l) {
+                    abbrType = "词条";
+                } else if (abb.getType() == 1l) {
+                    abbrType = "心得";
+                }
+                addAbbToMap(abb, explore, "发布了新的" + abbrType + "，快来学习一下吧。", followedUser, abb.getCreateTime());
                 result.add(explore);
             }
 
             for (Likes like : likes) {
                 Explore explore = new Explore();
                 Abbreviation abb = abbreviationDao.findById(like.getLikeId()).get();
-                addAbbToMap(abb, explore, "点赞了这个词条，一起来看看。", followedUser, like.getCreateTime());
+                if (abb.getType() == 0l) {
+                    abbrType = "词条";
+                } else if (abb.getType() == 1l) {
+                    abbrType = "心得";
+                }
+                addAbbToMap(abb, explore, "点赞了这个" + abbrType + "，一起来看看。", followedUser, like.getCreateTime());
                 result.add(explore);
             }
 
             for (Collect collect : collects) {
                 Explore explore = new Explore();
                 Abbreviation abb = abbreviationDao.findById(collect.getEntryId()).get();
-                addAbbToMap(abb, explore, "xxx收藏了一个词条，到底有什么秘密？", followedUser, collect.getCreateTime());
+                if (abb.getType() == 0l) {
+                    abbrType = "词条";
+                } else if (abb.getType() == 1l) {
+                    abbrType = "心得";
+                }
+                addAbbToMap(abb, explore, "收藏了一个" + abbrType + "，到底有什么秘密？", followedUser, collect.getCreateTime());
                 result.add(explore);
             }
             result.sort(new Comparator<Explore>() {
