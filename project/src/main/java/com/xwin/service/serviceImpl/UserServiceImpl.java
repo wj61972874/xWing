@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
         explore.setEvent_desc(desc);
         explore.setItem_name(abb.getAbbrName());
         explore.setItem_content(abb.getContent());
-
+        explore.setId(abb.getId());
         List<Image> imagesList = abb.getImageList();
 
         if (!imagesList.isEmpty()) {

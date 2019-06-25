@@ -62,8 +62,7 @@ public class AbbreviationServiceImpl implements AbbreviationService {
 
     @Override
     public ReturnResult getRecommendedEntryList() {
-        List list = new ArrayList();
-        list = abbreviationDao.getAllAbbreviation();
+        List list = abbreviationDao.getAllAbbreviation();
 //        Abbreviation abbreviation = abbreviationDao.findById(1L).get();
 //        List imagelist = abbreviation.getImageList();
 //        System.out.println(imagelist);

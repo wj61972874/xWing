@@ -3,6 +3,15 @@ package com.xwin.pojo;
 import java.util.Date;
 
 public class Explore {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    Long id;
     String event_desc;
     String item_name;
     String item_content;
