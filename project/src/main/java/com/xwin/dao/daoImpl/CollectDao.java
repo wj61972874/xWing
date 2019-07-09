@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface CollectDao extends JpaRepository<Collect, Long> {
 
-    @Query(value = "select c from Collect c where c.userId = :userId and c.dataStatus = 1 order by c.createTime desc")
+    @Query(value = "select c from Collect c where c.userId = :userId and c.dataStatus = 1 order by c.lastUpdateTime desc")
     List<Collect> findByUserId(@Param("userId") Long userId);
 
-    @Query(value = "select c from Collect c where c.userId = :userId and c.entryId =:entryId order by c.createTime desc")
+    @Query(value = "select c from Collect c where c.userId = :userId and c.entryId =:entryId order by c.lastUpdateTime desc")
     Collect findByUserIdAndEntryId(@Param("userId") Long userId,@Param("entryId") Long entryId);
 
 }

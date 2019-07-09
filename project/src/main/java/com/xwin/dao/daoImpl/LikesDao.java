@@ -16,6 +16,6 @@ public interface LikesDao extends JpaRepository<Likes, String> {
 
     Likes findByUserIdAndLikeId(Long userId, Long abbrId);
 
-    @Query(value = "select l from Likes l where l.userId = :userId order by l.createTime desc")
+    @Query(value = "select l from Likes l where l.userId = :userId order by l.lastUpdateTime desc")
     List<Likes> findByUserId(@Param("userId") Long userId);
 }
