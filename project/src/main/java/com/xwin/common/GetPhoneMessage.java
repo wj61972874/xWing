@@ -29,7 +29,7 @@ public class GetPhoneMessage {
     //随机数
     public static String randNum = RandomUtil.getRandom();
     //短信内容
-    public static String smsContent = "【未来科技】您的验证码为"+randNum+"，请于5分钟内正确输入，如非本人操作，请忽略此短信。";
+    public static String smsContent = "【Sundae】您的验证码为"+randNum+"，请于5分钟内正确输入，如非本人操作，请忽略此短信。";
 
     public static String getPram(String toPhone){
         StringBuffer httpArg = new StringBuffer();

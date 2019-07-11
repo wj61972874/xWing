@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ReturnResult getPhoneMessage(String phone) {
 
-//        String sendResult = GetPhoneMessage.getPram(phoneNumber);
+//        String sendResult = GetPhoneMessage.getPram(phone);
 //        String randNum = GetPhoneMessage.randNum;
         String randNum = "111111";
         User user = userDao.findByUsername(phone);

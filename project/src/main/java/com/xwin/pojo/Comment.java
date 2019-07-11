@@ -10,9 +10,9 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "comment")
-public class Comment  implements Serializable {
-
+public class Comment implements Serializable {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "user_id")
@@ -23,6 +23,17 @@ public class Comment  implements Serializable {
 
 	@Column(name = "abbreviation_id")
 	private String abbreviationId;
+
+	@Column(name = "rate")
+	private Float rate;
+
+	public Float getRate() {
+		return rate;
+	}
+
+	public void setRate(Float rate) {
+		this.rate = rate;
+	}
 
 	private String content;
 

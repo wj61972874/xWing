@@ -95,6 +95,7 @@ public class AbbreviationServiceImpl implements AbbreviationService {
             }
 
             abbr.getUserId();
+
             Collect collect = collectDao.findByUserIdAndEntryId(userId, entryId);
             Likes like = likesDao.findByUserIdAndLikeId(userId, entryId);
             Follow follow = followDao.findByUserIdAndFollowedUserId(userId, abbr.getUserId());
@@ -116,6 +117,9 @@ public class AbbreviationServiceImpl implements AbbreviationService {
             } else {
                 map.put("follow", false);
             }
+
+            List<Collect> collects = collectDao.findByEntryId(entryId);
+            map.put("collectNumber", collects.size());
         }
         abbreviationDao.save(abbr);
         return ReturnResult.build(RetCode.SUCCESS, "success", map);
