@@ -82,7 +82,8 @@ public class AbbreviationServiceImpl implements AbbreviationService {
         User author = userDao.findById(authorId).get();
         map.put("author", author.getNickname());
         map.put("avatar", author.getAvatarUrl());
-
+        List<Collect> collects = collectDao.findByEntryId(entryId);
+        map.put("collectNumber", collects.size());
         if (userId == null) {
             map.put("collect", false);
             map.put("like", false);
@@ -117,10 +118,8 @@ public class AbbreviationServiceImpl implements AbbreviationService {
             } else {
                 map.put("follow", false);
             }
-
-            List<Collect> collects = collectDao.findByEntryId(entryId);
-            map.put("collectNumber", collects.size());
         }
+
         abbreviationDao.save(abbr);
         return ReturnResult.build(RetCode.SUCCESS, "success", map);
     }

@@ -8,4 +8,6 @@ public class Constant {
     public static final Long MASSAGE_TYPE_FOLLOW = 2l;
 
     public static final Long MASSAGE_TYPE_COLLECT = 3l;
+
+    public static final Long MASSAGE_TYPE_COMMENT = 4l;
 }
