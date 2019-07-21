@@ -23,7 +23,7 @@ public interface MessageDao extends JpaRepository<Message, Long> {
 //    List<Message> findByUserId(@Param("userId") Long userId);
     Page<Message> findByUserId(@Param("userId") Long userId, Pageable pageable);
 
-    @Query(value = "select * from Message where user_id =:userId  and data_status = 1 order by create_time desc limit :pos,1", nativeQuery = true)
+    @Query(value = "select * from message where user_id =:userId  and data_status = 1 order by create_time desc limit :pos,1", nativeQuery = true)
     Message findByPosition(@Param("userId") Long userId, @Param("pos") Long pos);
 
     @Transactional
@@ -31,7 +31,7 @@ public interface MessageDao extends JpaRepository<Message, Long> {
     @Query(value = "Update message set read_flag = 1 where read_flag =0 and data_status=1 and user_id = :userId", nativeQuery = true)
     int readAllMessage(@Param("userId") Long userId);
 
-    @Query(value = "select count(*) from Message where user_id = :userId  and data_status = 1 and read_flag = 0", nativeQuery = true)
+    @Query(value = "select count(*) from message where user_id = :userId  and data_status = 1 and read_flag = 0", nativeQuery = true)
     int checkHasUnread(@Param("userId") Long userId);
 }
 
